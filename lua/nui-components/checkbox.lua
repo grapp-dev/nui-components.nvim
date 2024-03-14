@@ -1,9 +1,9 @@
 local NuiText = require("nui.text")
-local Text = require("nui-components.text")
+local Paragraph = require("nui-components.paragraph")
 
 local fn = require("nui-components.utils.fn")
 
-local Checkbox = Text:extend("Checkbox")
+local Checkbox = Paragraph:extend("Checkbox")
 
 function Checkbox:init(props)
   local lines = fn.default_to(props.label, "")

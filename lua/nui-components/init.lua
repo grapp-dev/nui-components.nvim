@@ -6,7 +6,6 @@ local Rows = require("nui-components.rows")
 local Select = require("nui-components.select")
 local Tab = require("nui-components.tab")
 local Tabs = require("nui-components.tabs")
-local Text = require("nui-components.text")
 
 local SignalValue = require("nui-components.signal.value")
 local fn = require("nui-components.utils.fn")
@@ -62,6 +61,7 @@ M.separator = Select.separator
 M.tree = require("nui-components.tree")
 M.button = require("nui-components.button")
 M.checkbox = require("nui-components.checkbox")
+M.paragraph = require("nui-components.paragraph")
 
 M.tabs = add_children_prop(Tabs)
 M.tab = add_children_prop(Tab)

@@ -1,9 +1,9 @@
-local Text = require("nui-components.text")
+local Paragraph = require("nui-components.paragraph")
 
 local event = require("nui.utils.autocmd").event
 local fn = require("nui-components.utils.fn")
 
-local Button = Text:extend("Button")
+local Button = Paragraph:extend("Button")
 
 function Button:init(props)
   local lines = fn.default_to(props.label, "")
