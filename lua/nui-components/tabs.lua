@@ -47,7 +47,7 @@ function Tabs:on_renderer_initialization(...)
 
         props.instance:add_signal_value(
           "hidden",
-          self._private.active_tab:clone():map(function(tab_id)
+          self._private.active_tab:dup():map(function(tab_id)
             return not (tab_id == id)
           end)
         )

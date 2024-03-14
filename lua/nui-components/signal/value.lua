@@ -80,7 +80,7 @@ function SignalValue:unsubscribe()
   end
 end
 
-function SignalValue:clone()
+function SignalValue:dup()
   return SignalValue.create(self._private.subject, self._private.key)
 end
 

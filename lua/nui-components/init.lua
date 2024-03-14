@@ -43,7 +43,7 @@ function M.is_active_factory(value)
 
   return function(arg1)
     if is_signal_value then
-      return value:clone():map(function(arg0)
+      return value:dup():map(function(arg0)
         return arg0 == arg1
       end)
     end
