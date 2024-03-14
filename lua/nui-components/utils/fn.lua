@@ -233,12 +233,6 @@ function M.eq(x, y)
   return x == y
 end
 
-function M.constant(x)
-  return function()
-    return x
-  end
-end
-
 function M.clamp(value, min, max)
   return math.min(math.max(value, min), max)
 end
