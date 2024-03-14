@@ -157,7 +157,7 @@ function Component:_default_prop_types()
     border_label = { "string", "table", "nil" },
     border_style = { "string", "nil" },
     children = { "table", "nil" },
-    focus_key = { "table", "string", "nil" },
+    global_focus_key = { "table", "string", "nil" },
     padding = { "table", "number", "nil" },
     autofocus = { "boolean", "nil" },
     validate = { "function", "nil" },
@@ -273,10 +273,10 @@ function Component:_split_mappings()
   local renderer = self:get_renderer()
   local default_global_mappings = {}
 
-  if props.focus_key then
+  if props.global_focus_key then
     table.insert(default_global_mappings, {
       mode = { "n", "i", "v" },
-      key = props.focus_key,
+      key = props.global_focus_key,
       handler = function()
         self:focus()
       end,
