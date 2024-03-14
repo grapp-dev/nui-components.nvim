@@ -2,7 +2,7 @@ local Observable = require("nui-components.rx.observable")
 local Subscription = require("nui-components.rx.subscription")
 local fn = require("nui-components.utils.fn")
 
-function Observable:combineLatest(...)
+function Observable:combine_latest(...)
   local sources = { ... }
   local combinator = table.remove(sources)
   if type(combinator) ~= "function" then
