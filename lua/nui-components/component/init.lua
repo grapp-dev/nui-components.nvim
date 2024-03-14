@@ -386,7 +386,7 @@ function Component:modify_buffer_content(modify_fn)
   end)
 end
 
-function Component:make_hl(name)
+function Component:hl_group(name)
   return "NuiComponents" .. self.class.name .. (name or "")
 end
 

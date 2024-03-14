@@ -80,7 +80,7 @@ function Button:get_lines()
   end
 
   local is_focused = self:is_focused()
-  local hl_group = self:make_hl(props.is_active and "Active" or (is_focused and "Focused" or ""))
+  local hl_group = self:hl_group(props.is_active and "Active" or (is_focused and "Focused" or ""))
 
   lines = Button.super.get_lines(self)
 

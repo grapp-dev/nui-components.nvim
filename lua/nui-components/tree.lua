@@ -211,7 +211,7 @@ function Tree:_set_line_hl()
   end
 
   if vim.api.nvim_win_is_valid(self.winid) then
-    vim.api.nvim_set_hl(self._private.namespace, "CursorLine", { link = self:make_hl("ItemFocused") })
+    vim.api.nvim_set_hl(self._private.namespace, "CursorLine", { link = self:hl_group("ItemFocused") })
     vim.api.nvim_win_set_hl_ns(self.winid, self._private.namespace)
   end
 end

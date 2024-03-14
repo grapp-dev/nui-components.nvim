@@ -74,10 +74,10 @@ function Checkbox:get_lines()
   end
 
   lines = Checkbox.super.get_lines(self)
-  self:set_hl_group(lines, self:make_hl(is_checked and "LabelChecked" or "Label"))
+  self:set_hl_group(lines, self:hl_group(is_checked and "LabelChecked" or "Label"))
 
-  local sign = is_checked and NuiText(props.checked_sign, self:make_hl("IconChecked"))
-    or NuiText(props.default_sign, self:make_hl("Icon"))
+  local sign = is_checked and NuiText(props.checked_sign, self:hl_group("IconChecked"))
+    or NuiText(props.default_sign, self:hl_group("Icon"))
 
   local separator =
     NuiText(is_checked and (#props.checked_sign > 0 and " " or "") or (#props.default_sign > 0 and " " or ""))

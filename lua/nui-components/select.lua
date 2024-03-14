@@ -105,10 +105,10 @@ function Select:actions()
       local line = Line()
 
       if is_selected then
-        line:append(node.text, self:make_hl("OptionSelected"))
+        line:append(node.text, self:hl_group("OptionSelected"))
       else
         local is_separator = node._type == "separator"
-        line:append(node.text, self:make_hl(is_separator and "Separator" or "Option"))
+        line:append(node.text, self:hl_group(is_separator and "Separator" or "Option"))
       end
 
       return line
