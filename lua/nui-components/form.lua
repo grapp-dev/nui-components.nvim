@@ -3,7 +3,7 @@ local fn = require("nui-components.utils.fn")
 
 local Form = Component:extend("Form")
 
-function Form:init(props)
+function Form:init(props, popup_options)
   Form.super.init(
     self,
     fn.merge(
@@ -17,9 +17,9 @@ function Form:init(props)
         is_focusable = false,
       })
     ),
-    {
+    fn.deep_merge({
       focusable = false,
-    }
+    }, popup_options)
   )
 end
 

@@ -4,7 +4,7 @@ local fn = require("nui-components.utils.fn")
 
 local Gap = Component:extend("Gap")
 
-function Gap:init(props)
+function Gap:init(props, popup_options)
   Gap.super.init(
     self,
     fn.merge(
@@ -15,10 +15,10 @@ function Gap:init(props)
         is_focusable = false,
       })
     ),
-    {
+    fn.deep_merge({
       focusable = false,
-      zindex = 100,
-    }
+      zindex = 99,
+    }, popup_options)
   )
 end
 

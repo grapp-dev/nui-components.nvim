@@ -5,7 +5,7 @@ local fn = require("nui-components.utils.fn")
 
 local TextInput = Component:extend("TextInput")
 
-function TextInput:init(props)
+function TextInput:init(props, popup_options)
   props = fn.merge({
     size = 1,
     autoresize = false,
@@ -30,14 +30,18 @@ function TextInput:init(props)
     props.size = self._private.text_input_signal.size
   end
 
-  TextInput.super.init(self, props, {
-    buf_options = {
-      filetype = props.filetype or "",
-    },
-    win_options = {
-      wrap = props.wrap,
-    },
-  })
+  TextInput.super.init(
+    self,
+    props,
+    fn.deep_merge({
+      buf_options = {
+        filetype = props.filetype or "",
+      },
+      win_options = {
+        wrap = props.wrap,
+      },
+    }, popup_options)
+  )
 end
 
 function TextInput:prop_types()

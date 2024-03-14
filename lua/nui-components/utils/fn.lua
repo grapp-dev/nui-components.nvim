@@ -266,11 +266,11 @@ function M.default_to(value, default_value)
 end
 
 function M.merge(fst, snd)
-  return vim.tbl_extend("force", fst, snd)
+  return vim.tbl_extend("force", fst, M.default_to(snd, {}))
 end
 
 function M.deep_merge(fst, snd)
-  return vim.tbl_deep_extend("force", fst, snd)
+  return vim.tbl_deep_extend("force", fst, M.default_to(snd, {}))
 end
 
 function M.preserve_cursor_position(fn)

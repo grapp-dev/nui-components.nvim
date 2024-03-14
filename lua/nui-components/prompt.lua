@@ -3,7 +3,7 @@ local fn = require("nui-components.utils.fn")
 
 local Prompt = TextInput:extend("Gap")
 
-function Prompt:init(props)
+function Prompt:init(props, popup_options)
   Prompt.super.init(
     self,
     fn.merge(
@@ -15,11 +15,11 @@ function Prompt:init(props)
         max_lines = 1,
       })
     ),
-    {
+    fn.deep_merge({
       buf_options = {
         buftype = "prompt",
       },
-    }
+    }, popup_options)
   )
 end
 

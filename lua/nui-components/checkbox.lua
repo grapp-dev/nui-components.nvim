@@ -5,7 +5,7 @@ local fn = require("nui-components.utils.fn")
 
 local Checkbox = Paragraph:extend("Checkbox")
 
-function Checkbox:init(props)
+function Checkbox:init(props, popup_options)
   local lines = fn.default_to(props.label, "")
   props.label = nil
 
@@ -18,7 +18,8 @@ function Checkbox:init(props)
       checked_sign = "[x]",
       default_sign = "[ ]",
       lines = lines,
-    }, props)
+    }, props),
+    popup_options
   )
 end
 

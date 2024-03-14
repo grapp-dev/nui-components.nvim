@@ -4,7 +4,7 @@ local fn = require("nui-components.utils.fn")
 
 local Tab = Component:extend("Tab")
 
-function Tab:init(props)
+function Tab:init(props, popup_options)
   Tab.super.init(
     self,
     fn.merge(
@@ -16,9 +16,9 @@ function Tab:init(props)
         is_focusable = false,
       })
     ),
-    {
+    fn.deep_merge({
       focusable = false,
-    }
+    }, popup_options)
   )
 end
 

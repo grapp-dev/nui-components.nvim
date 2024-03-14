@@ -43,7 +43,7 @@ function Select.separator(content)
   })
 end
 
-function Select:init(props)
+function Select:init(props, popup_options)
   props = fn.merge({
     size = 1,
     selected = {},
@@ -51,7 +51,7 @@ function Select:init(props)
     data = {},
   }, props)
 
-  Select.super.init(self, props)
+  Select.super.init(self, props, popup_options)
 end
 
 function Select:prop_types()

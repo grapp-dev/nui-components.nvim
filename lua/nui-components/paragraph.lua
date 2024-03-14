@@ -23,7 +23,7 @@ function Paragraph:init(props, popup_options)
       buf_options = {
         filetype = props.filetype or "",
       },
-    }, fn.default_to(popup_options, {}))
+    }, popup_options)
   )
 end
 

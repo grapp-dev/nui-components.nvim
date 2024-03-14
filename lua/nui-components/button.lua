@@ -5,7 +5,7 @@ local fn = require("nui-components.utils.fn")
 
 local Button = Paragraph:extend("Button")
 
-function Button:init(props)
+function Button:init(props, popup_options)
   local lines = fn.default_to(props.label, "")
   props.label = nil
 
@@ -16,7 +16,8 @@ function Button:init(props)
       press_key = { "<CR>", "<Space>" },
       lines = lines,
       is_active = false,
-    }, props)
+    }, props),
+    popup_options
   )
 end
 

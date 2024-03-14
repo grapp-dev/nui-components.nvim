@@ -4,7 +4,7 @@ local fn = require("nui-components.utils.fn")
 
 local Tabs = Component:extend("Tabs")
 
-function Tabs:init(props)
+function Tabs:init(props, popup_options)
   Tabs.super.init(
     self,
     fn.merge(
@@ -16,9 +16,9 @@ function Tabs:init(props)
         is_focusable = false,
       })
     ),
-    {
+    fn.deep_merge({
       focusable = false,
-    }
+    }, popup_options)
   )
 
   local is_signal_value = fn.isa(props.active_tab, SignalValue)

@@ -43,7 +43,7 @@ end
 
 local Tree = Component:extend("Tree")
 
-function Tree:init(props)
+function Tree:init(props, popup_options)
   props = fn.merge({
     size = 1,
     on_select = fn.ignore,
@@ -51,7 +51,7 @@ function Tree:init(props)
     data = {},
   }, props)
 
-  local popup_options = {
+  popup_options = fn.deep_merge({
     win_options = {
       cursorline = true,
       scrolloff = 1,
@@ -60,7 +60,7 @@ function Tree:init(props)
     border = {
       style = props.style,
     },
-  }
+  }, popup_options)
 
   Tree.super.init(self, props, popup_options)
 
