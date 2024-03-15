@@ -63,6 +63,7 @@ M.tree = require("nui-components.tree")
 M.button = require("nui-components.button")
 M.checkbox = require("nui-components.checkbox")
 M.paragraph = require("nui-components.paragraph")
+M.spinner = require("nui-components.spinner")
 
 M.tabs = add_children_prop(Tabs)
 M.tab = add_children_prop(Tab)
