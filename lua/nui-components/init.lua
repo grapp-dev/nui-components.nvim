@@ -2,6 +2,7 @@ local Box = require("nui-components.box")
 local Columns = require("nui-components.columns")
 local Form = require("nui-components.form")
 local Gap = require("nui-components.gap")
+local Line = require("nui.line")
 local Rows = require("nui-components.rows")
 local Select = require("nui-components.select")
 local Tab = require("nui-components.tab")
@@ -66,17 +67,6 @@ M.paragraph = require("nui-components.paragraph")
 M.tabs = add_children_prop(Tabs)
 M.tab = add_children_prop(Tab)
 
-function M.text(lines, props)
-  if type(lines) == "table" and not fn.isa(lines, SignalValue) then
-    return Text(lines)
-  end
-
-  props = props or {}
-  props.lines = lines
-
-  return Text(props)
-end
-
 function M.gap(props)
   if type(props) == "number" then
     props = { size = props }
@@ -89,6 +79,29 @@ M.box = normalize_layout_props(Box)
 M.columns = normalize_layout_props(Columns)
 M.rows = normalize_layout_props(Rows)
 M.form = add_children_prop(Form)
+
+M.text = require("nui.text")
+
+function M.line(...)
+  local count = select("#", ...)
+  local texts = {}
+
+  if count == 1 then
+    texts = fn.pack(...)
+  else
+    texts = { ... }
+  end
+
+  texts = fn.imap(texts, function(text)
+    if type(text) == "string" then
+      return M.text(text)
+    end
+
+    return text
+  end)
+
+  return Line(texts)
+end
 
 M.create_signal = require("nui-components.signal").create
 M.validator = require("nui-components.validators")
