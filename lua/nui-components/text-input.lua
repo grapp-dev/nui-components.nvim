@@ -19,7 +19,7 @@ function TextInput:init(props, popup_options)
     props.max_lines = math.max(1, props.max_lines)
   end
 
-  if props.autoresize and not props.flex then
+  if props.autoresize then
     local signal = Signal.create({ size = props.size })
 
     self._private = {
@@ -66,7 +66,7 @@ function TextInput:_attach_change_listener()
       self:set_current_value(value)
       props.on_change(value, self)
 
-      if props.autoresize and not props.flex then
+      if props.autoresize then
         self._private.text_input_signal.size = math.max(#lines, self._private.text_input_initial_size)
       end
     end),
@@ -122,7 +122,7 @@ function TextInput:mappings()
 
           vim.api.nvim_feedkeys("\n", "insert", false)
 
-          if props.autoresize and not props.flex then
+          if props.autoresize then
             local renderer = self:get_renderer()
 
             renderer:schedule(function()
