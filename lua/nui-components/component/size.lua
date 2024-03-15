@@ -22,7 +22,7 @@ function Size:_of(width, height)
   }
 end
 
-function Size:_get_children_content_size()
+function Size:_get_children_content_height()
   local component = self._private.component
   local children = component:get_children()
   local direction = component:get_direction()
@@ -35,15 +35,43 @@ function Size:_get_children_content_size()
     if on_layout_value then
       local height = on_layout_value.height + border_delta_size.height
 
-      if direction == "column" then
-        return acc + height
-      end
+      -- if direction == "column" then
+      --   return acc + height
+      -- end
 
       return math.max(acc, height)
     end
 
-    if props.size then
-      return math.max(acc, props.size)
+    if props.size and direction == "row" then
+      return math.max(acc, props.size + border_delta_size.height)
+    end
+
+    return acc
+  end, 0)
+end
+
+function Size:_get_children_content_width()
+  local component = self._private.component
+  local children = component:get_children()
+  local direction = component:get_direction()
+
+  return fn.ireduce(children, function(acc, child)
+    local props = child:get_props()
+    local on_layout_value = child:on_layout()
+    local border_delta_size = child:get_border_delta_size()
+
+    if on_layout_value then
+      local width = on_layout_value.width + border_delta_size.width
+
+      -- if direction == "column" then
+      --   return acc + width
+      -- end
+
+      return math.max(acc, width)
+    end
+
+    if props.size and direction == "row" then
+      return acc + props.size + border_delta_size.width
     end
 
     return acc
@@ -115,13 +143,14 @@ function Size:_use_content()
     local parent = component:get_parent()
     local parent_direction = parent:get_direction()
     local parent_size = parent:get_size()
-    local children_content_size = self:_get_children_content_size()
 
     if parent_direction == "column" then
-      return self:_of(parent_size.width, children_content_size)
+      local children_content_height = self:_get_children_content_height()
+      return self:_of(parent_size.width, children_content_height)
     end
 
-    return self:_of(children_content_size, parent_size.height)
+    local children_content_width = self:_get_children_content_width()
+    return self:_of(children_content_width, parent_size.height)
   end
 
   return error("component " .. component:get_id() .. " has no children")
@@ -185,10 +214,14 @@ function Size:_use_size()
 
   if on_layout_value then
     if parent_direction == "row" then
-      return self:_of(self:_include_border_size(on_layout_value.width), parent_size.height)
+      local width = on_layout_value.width and self:_include_border_size(on_layout_value.width) or parent_size.width
+
+      return self:_of(width, parent_size.height)
     end
 
-    return self:_of(parent_size.width, self:_include_border_size(on_layout_value.height))
+    local height = on_layout_value.height and self:_include_border_size(on_layout_value.height) or parent_size.height
+
+    return self:_of(parent_size.width, height)
   end
 
   local size = self:_include_border_size(props.size)
