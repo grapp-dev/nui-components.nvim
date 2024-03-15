@@ -36,6 +36,13 @@ function SignalValue:map(map_fn)
   return self
 end
 
+function SignalValue:negate()
+  self._private.observable = self._private.observable:map(function(value)
+    return not value
+  end)
+  return self
+end
+
 function SignalValue:tap(tap_fn)
   self._private.observable = self._private.observable:tap(tap_fn)
   return self
