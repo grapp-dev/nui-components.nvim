@@ -13,7 +13,7 @@ function Spinner:init(props, popup_options)
     fn.merge(
       {
         is_loading = false,
-        frames = spinner_formats.default,
+        frames = spinner_formats.dots,
         interval = 100,
       },
       fn.merge(props, {
