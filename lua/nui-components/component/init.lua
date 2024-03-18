@@ -241,7 +241,7 @@ function Component:_attach_events()
   local default_events = {
     {
       event = event.BufEnter,
-      callback = vim.schedule_wrap(function()
+      handler = vim.schedule_wrap(function()
         self:if_mounted(function()
           self._private.focused = true
           renderer:set_last_focused_component(self)
@@ -251,7 +251,7 @@ function Component:_attach_events()
     },
     {
       event = event.BufLeave,
-      callback = vim.schedule_wrap(function()
+      handler = vim.schedule_wrap(function()
         self:if_mounted(function()
           self._private.focused = false
           renderer:set_last_focused_component(self)
@@ -264,7 +264,7 @@ function Component:_attach_events()
   local events = fn.concat(default_events, props.events(self), self:events())
 
   fn.ieach(events, function(tbl)
-    self:on(tbl.event, tbl.callback)
+    self:on(tbl.event, tbl.handler, tbl.options)
   end)
 end
 

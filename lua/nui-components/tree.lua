@@ -149,7 +149,7 @@ function Tree:events()
   return {
     {
       event = event.BufEnter,
-      callback = vim.schedule_wrap(function()
+      handler = vim.schedule_wrap(function()
         local tree = self:get_tree()
 
         self:_set_line_hl()

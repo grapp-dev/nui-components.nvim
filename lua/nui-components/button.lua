@@ -54,7 +54,7 @@ function Button:mappings()
 end
 
 function Button:events()
-  local callback = vim.schedule_wrap(function()
+  local handler = vim.schedule_wrap(function()
     self:if_mounted(function()
       self:on_update()
     end)
@@ -63,11 +63,11 @@ function Button:events()
   return {
     {
       event = event.BufEnter,
-      callback = callback,
+      handler = handler,
     },
     {
       event = event.BufLeave,
-      callback = callback,
+      handler = handler,
     },
   }
 end

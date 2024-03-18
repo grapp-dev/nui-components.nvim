@@ -139,7 +139,7 @@ function TextInput:events()
   return {
     {
       event = event.BufEnter,
-      callback = vim.schedule_wrap(function()
+      handler = vim.schedule_wrap(function()
         local has_cmp, cmp = pcall(require, "cmp")
 
         vim.api.nvim_command("startinsert!")
@@ -161,7 +161,7 @@ function TextInput:events()
     },
     {
       event = event.BufLeave,
-      callback = function()
+      handler = function()
         vim.api.nvim_command("stopinsert")
       end,
     },
