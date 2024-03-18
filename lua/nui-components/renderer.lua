@@ -29,7 +29,7 @@ function Renderer.create(options)
         close = "<Esc>",
         focus_next = "<Tab>",
         focus_prev = "<S-Tab>",
-      }, fn.default_to(options.keymap, {})),
+      }, options.keymap),
       focusable_components = {},
       mappings = {},
       events = {},
@@ -226,7 +226,7 @@ function Renderer:get_component_by_id(id)
   end)
 end
 
-function Renderer:get_components_tree()
+function Renderer:get_component_tree()
   return self._private.tree
 end
 
