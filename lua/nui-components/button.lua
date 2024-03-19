@@ -16,6 +16,7 @@ function Button:init(props, popup_options)
       press_key = { "<CR>", "<Space>" },
       lines = lines,
       is_active = false,
+      truncate = true,
     }, props),
     popup_options
   )
@@ -74,7 +75,7 @@ end
 
 function Button:get_lines()
   local props = self:get_props()
-  local lines = vim.split(props.lines, "\n")
+  local lines = Button.super.get_lines(self)
 
   if props.prepare_lines then
     return props.prepare_lines(lines, self)
@@ -82,8 +83,6 @@ function Button:get_lines()
 
   local is_focused = self:is_focused()
   local hl_group = self:hl_group(props.is_active and "Active" or (is_focused and "Focused" or ""))
-
-  lines = Button.super.get_lines(self)
 
   self:set_hl_group(lines, hl_group)
 

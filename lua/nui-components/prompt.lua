@@ -11,6 +11,7 @@ function Prompt:init(props, popup_options)
       {
         on_submit = fn.ignore,
         prefix = "",
+        submit_key = "<CR>",
       },
       fn.merge(props, {
         size = 1,
@@ -29,6 +30,7 @@ function Prompt:prop_types()
   return fn.merge(Prompt.super.prop_types(self), {
     on_submit = "function",
     prefix = "string",
+    submit_key = { "table", "string" },
   })
 end
 
@@ -71,7 +73,7 @@ function Prompt:mappings()
   return {
     {
       mode = { "i", "n" },
-      key = "<CR>",
+      key = props.submit_key,
       handler = function()
         props.on_submit(self:get_current_value())
       end,

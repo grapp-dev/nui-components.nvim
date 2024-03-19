@@ -18,6 +18,7 @@ function Checkbox:init(props, popup_options)
       checked_sign = "[x]",
       default_sign = "[ ]",
       lines = lines,
+      truncate = true,
     }, props),
     popup_options
   )
@@ -68,13 +69,12 @@ end
 function Checkbox:get_lines()
   local props = self:get_props()
   local is_checked = self:is_checked()
-  local lines = vim.split(props.lines, "\n")
+  local lines = Checkbox.super.get_lines(self)
 
-  if props.prepare_line then
-    return props.prepare_line(is_checked, lines, self)
+  if props.prepare_lines then
+    return props.prepare_lines(is_checked, lines, self)
   end
 
-  lines = Checkbox.super.get_lines(self)
   self:set_hl_group(lines, self:hl_group(is_checked and "LabelChecked" or "Label"))
 
   local sign = is_checked and NuiText(props.checked_sign, self:hl_group("IconChecked"))

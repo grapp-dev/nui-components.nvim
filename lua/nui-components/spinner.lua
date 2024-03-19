@@ -3,7 +3,7 @@ local Line = require("nui.line")
 local SignalValue = require("nui-components.signal.value")
 local Subject = require("nui-components.rx.subject")
 local fn = require("nui-components.utils.fn")
-local spinner_formats = require("nui-components.utils.spinner_formats")
+local spinner_formats = require("nui-components.utils.spinner-formats")
 
 local Spinner = Component:extend("Spinner")
 
@@ -66,7 +66,7 @@ function Spinner:on_update()
   local current_frame = self._private.current_frame
 
   local line = Line()
-  line:append(props.frames[current_frame])
+  line:append(props.frames[current_frame], self:hl_group())
   line:render(self.bufnr, -1, 1)
 
   if self._private.subject then

@@ -94,7 +94,7 @@ function Tree:mappings()
   return {
     { mode = mode, key = { "<CR>", "<Space>" }, handler = action("on_select") },
     { mode = mode, key = { "j", "<Down>" }, handler = action("on_focus_next") },
-    { mode = mode, key = { "<k>", "<Up>" }, handler = action("on_focus_prev") },
+    { mode = mode, key = { "k", "<Up>" }, handler = action("on_focus_prev") },
   }
 end
 
@@ -211,7 +211,7 @@ function Tree:_set_line_hl()
   end
 
   if vim.api.nvim_win_is_valid(self.winid) then
-    vim.api.nvim_set_hl(self._private.namespace, "CursorLine", { link = self:hl_group("ItemFocused") })
+    vim.api.nvim_set_hl(self._private.namespace, "CursorLine", { link = self:hl_group("NodeFocused") })
     vim.api.nvim_win_set_hl_ns(self.winid, self._private.namespace)
   end
 end
@@ -257,7 +257,15 @@ function Tree:on_mount()
   self._private.tree = NuiTree({
     bufnr = self.bufnr,
     ns_id = self.ns_id,
-    nodes = props.data,
+    nodes = fn.imap(props.data, function(node)
+      if node.id then
+        node._id = node.id
+        return node
+      end
+
+      node._id = tostring(math.random())
+      return node
+    end),
     get_node_id = function(node)
       return node._id
     end,

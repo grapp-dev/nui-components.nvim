@@ -18,6 +18,7 @@ function Paragraph:init(props, popup_options)
     fn.merge({
       lines = "",
       align = "left",
+      truncate = false,
     }, props),
     fn.deep_merge({
       buf_options = {
@@ -31,6 +32,7 @@ function Paragraph:prop_types()
   return {
     lines = { "table", "string" },
     align = "string",
+    truncate = "boolean",
   }
 end
 
@@ -141,6 +143,7 @@ function Paragraph:on_update()
     local renderer = self:get_renderer()
     local lines = self:get_lines()
     local size = self:get_size()
+    local props = self:get_props()
 
     if not self:is_hidden() then
       self._private.last_width = size.width
@@ -157,7 +160,10 @@ function Paragraph:on_update()
         new_line:append(string.rep(" ", left_gap_width))
       end
 
-      self:_truncate_line(line, width)
+      if props.truncate then
+        self:_truncate_line(line, width)
+      end
+
       new_line:append(line)
 
       if right_gap_width > 0 then

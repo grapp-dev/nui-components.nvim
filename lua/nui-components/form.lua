@@ -41,9 +41,7 @@ function Form:on_renderer_initialization(...)
       mode = { "i", "n" },
       key = props.submit_key,
       handler = function()
-        if self:validate() then
-          self:submit()
-        end
+        self:submit()
       end,
     },
   }
@@ -73,7 +71,8 @@ end
 
 function Form:submit()
   local props = self:get_props()
-  props.on_submit()
+  local is_valid = self:validate()
+  props.on_submit(is_valid)
 end
 
 return Form

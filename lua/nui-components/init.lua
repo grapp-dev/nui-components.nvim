@@ -17,14 +17,14 @@ local function normalize_layout_props(constructor)
   return function(props, ...)
     local children = { ... }
 
+    if type(props) == "number" then
+      return constructor({ flex = props, children = children })
+    end
+
     if not props.size and not props.flex then
       table.insert(children, 1, props)
 
       return constructor({ flex = 1, children = children })
-    end
-
-    if type(props) == "number" then
-      return constructor({ flex = props, children = children })
     end
 
     return constructor(fn.merge(props, { children = children }))
@@ -59,6 +59,7 @@ M.prompt = require("nui-components.prompt")
 M.select = Select
 M.option = Select.option
 M.separator = Select.separator
+M.node = require("nui.tree").Node
 M.tree = require("nui-components.tree")
 M.button = require("nui-components.button")
 M.checkbox = require("nui-components.checkbox")
