@@ -1,6 +1,6 @@
 # nui-components.nvim &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
 
-<img src="https://raw.githubusercontent.com/grapp-dev/nui-components.nvim/main/assets/nui-components-logo.png" alt="nui-components.nvim" align="right">
+<img src="https://raw.githubusercontent.com/grapp-dev/nui-components.nvim/main/assets/nui-components-logo.png" alt="nui-components.nvim" align="right" width="100" height="100">
 
 > A powerful tool that aims to make UI development in Neovim more accessible, intuitive, and enjoyable.
 
