@@ -10,27 +10,19 @@
   }
 
   h3 {
-    position: absolute;
-    left: 50%;
-    padding: 0 32px;
-    transform: translate(-50%, -50%);
     text-transform: uppercase;
     font-size: 24px;
     letter-spacing: 0.1em;
     font-weight: 400;
-    font-weight: 500;
     color: hsl(204 12% 45%);
     white-space: nowrap;
-    margin-top: 40px;
-
-    :global(.dark) & {
-      color: hsl(204, 8%, 50%);
-    }
+    text-align: center;
+    margin-bottom: 0;
   }
 }
 
 .features {
-  padding: min(12vw, 6rem) 0;
+  padding: min(12vw, 2rem) 0;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   place-items: start center;
