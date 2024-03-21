@@ -26,10 +26,9 @@ function Spinner:init(props, popup_options)
   )
 
   self._private.current_frame = 1
+  self._private.subject = Subject.create()
 
   if fn.isa(props.is_loading, SignalValue) then
-    self._private.subject = Subject.create()
-
     self._private.subscription = self._private.subject
       :combine_latest(props.is_loading:dup():get_observable())
       :subscribe(function(current_frame, is_loading)
@@ -38,6 +37,11 @@ function Spinner:init(props, popup_options)
           self:redraw()
         end
       end)
+  elseif props.is_loading then
+    self._private.subscription = self._private.subject:subscribe(function(current_frame)
+      self._private.current_frame = current_frame
+      self:redraw()
+    end)
   end
 end
 
