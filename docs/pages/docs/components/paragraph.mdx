@@ -1,0 +1,55 @@
+
+import { Property } from '../../../components/Property'
+
+## Paragraph
+
+`Paragraph` is a component that displays a series of lines or text. 
+
+![](/gifs/paragraph-1.gif)
+
+### Usage Example
+
+```lua
+n.paragraph({
+  lines = "[close]",
+  align = "right",
+  is_focusable = false,
+})
+
+n.paragraph({
+  autofocus = true,
+  lines = {
+    n.line(n.text("Hello", "Boolean"), " ", n.text("World", "Italic")),
+    n.line(n.text("nui.components", "String")),
+  },
+  align = "center",
+})
+```
+
+### Properties
+
+#### align
+
+<Property 
+  types={["'left' | 'center' | 'right'"]}
+/>
+
+#### lines
+
+<Property 
+  types={['string | string[] | NuiLine | NuiLine[]']}
+/>
+
+
+#### truncate
+
+<Property 
+  types={['boolean']}
+/>
+
+#### prepare_lines
+
+<Property 
+  types={['fun(lines: NuiLine[], component: Checkbox): nil']}
+/>
+

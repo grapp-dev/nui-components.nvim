@@ -1,0 +1,101 @@
+/* @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital@0;1&family=Silkscreen:wght@400;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital@0;1&family=Jost:ital,wght@1,700&family=Silkscreen&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  h3 {
+    font-size: 22px;
+    letter-spacing: -1px !important;
+    font-family: 'Silkscreen', sans-serif;
+    text-transform: uppercase;
+    margin: 30px 0 16px;
+    font-weight: normal !important;
+  }
+
+  h1, h2, h3, h4, h5 {
+    .subheading-anchor {
+      font-family: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    }
+  }
+
+  blockquote {
+    font-style: normal !important;
+  }
+
+  code, kbd, samp, pre {
+    font-family: 'JetBrains Mono';
+  }
+
+  .nextra-code-block pre {
+    font-size: 16px;
+  }
+
+  :is(html[class~=dark] body) {
+    background-color: #0c0f1a;
+  }
+
+  :is(html[class~=dark] .nextra-sidebar-container),
+  :is(html[class~=dark] .nextra-nav-container-blur),
+  :is(html[class~=dark] .dark\:nx-bg-dark),
+  :is(html[class~=dark] footer) {
+    --tw-shadow: none;
+    background-color: #0c0f1a !important;
+  }
+
+  :is(html[class~=dark] .dark\:nx-text-neutral-400) {
+    color: rgba(156, 163, 175, var(--tw-text-opacity));
+  }
+
+  &.dark {
+    --shiki-color-text: #f3f7ff;
+    --shiki-color-background: transparent;
+    --shiki-token-constant: #ff89af;
+    --shiki-token-string: #a8acc0;
+    --shiki-token-comment: #aaa;
+    --shiki-token-keyword: #878b9f;
+    --shiki-token-parameter: #7cd2ff;
+    --shiki-token-function: #a8acc0;
+    --shiki-token-string-expression: #a8acc0;
+    --shiki-token-punctuation: #878b9f;
+    --shiki-token-link: #faf39c;
+
+    .nextra-code-block pre {
+      background-color: #0D111E;
+    }
+  }
+
+  .grapp {
+    font-size: 18px;
+    letter-spacing: -1px !important;
+    font-family: 'Silkscreen', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .grapp-logo {
+    height: 40px;
+    margin: 40px 0;
+  }
+
+  video {
+    margin: 24px 0 16px;
+  }
+}
+
+/* :root { */
+/*   --shiki-color-text: #f3f7ff !important; */
+/*   --shiki-color-background: transparent; */
+/*   --shiki-token-constant: #1976d2; */
+/*   --shiki-token-string: #22863a; */
+/*   --shiki-token-comment: #aaa; */
+/*   --shiki-token-keyword: #d32f2f; */
+/*   --shiki-token-parameter: #ff9800; */
+/*   --shiki-token-function: #ff538f !important; */
+/*   --shiki-token-string-expression: #a8acc0; */
+/*   --shiki-token-punctuation: #212121; */
+/*   --shiki-token-link: #22863a; */
+/* } */
+ 
+

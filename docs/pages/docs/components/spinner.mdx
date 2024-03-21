@@ -1,0 +1,101 @@
+import { Property } from '../../../components/Property'
+
+## Spinner
+
+`Spinner` provides a visual cue that an action is processing, awaiting a change or a result.
+
+![](/gifs/spinner-1.gif)
+
+### Usage Example
+
+```lua
+local spinner_formats = require("nui-components.utils.spinner-formats")
+
+local signal = n.create_signal({ 
+  is_loading = false 
+})
+
+n.spinner({
+  is_loading = signal.is_loading,
+  frames = spinner_formats.bouncing_ball,
+})
+```
+
+### Properties
+
+#### frames
+
+<Property
+  defaultValue="spinner_formats.dots"
+  types={['string[]']}
+/>
+
+#### interval
+
+<Property
+  defaultValue="100"
+  types={['number']}
+/>
+
+#### is_loading
+
+<Property
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+### Highlight Groups
+
+- `NuiComponentsSpinner`
+
+### Formats
+
+```lua
+local spinner_formats = require("nui-components.utils.spinner-formats")
+```
+
+- `classic`
+- `spin` 
+- `spin_2` 
+- `spin_3` 
+- `spin_4` 
+- `pulse`
+- `pulse_2`
+- `pulse_3`
+- `pulse_4` 
+- `dots`
+- `dots_2`
+- `dots_3`
+- `dots_4`
+- `dots_5`
+- `dots_6`
+- `dots_7`
+- `dots_8`
+- `dots_9`
+- `dots_10`
+- `dots_11`
+- `arrow`
+- `arrow_pulse`
+- `triangle`
+- `arc`
+- `pipe`
+- `bouncing`
+- `bouncing_ball`
+- `bounce`
+- `box_bounce`
+- `box_bounce_2`
+- `star`
+- `toggle`
+- `balloon`
+- `balloon_2`
+- `balloon_3`
+- `flip`
+- `toss`
+- `lighthouse`
+- `points`
+- `points_2`
+- `burger`
+- `dance`
+- `shark`
+- `pong`
+

@@ -1,0 +1,82 @@
+import { Property } from '../../../components/Property'
+
+## Tree
+
+`Tree` is responsible for rendering content structured in a tree-like manner.
+
+![](/gifs/tree-1.gif)
+
+### Usage Example
+
+```lua
+n.tree({
+  autofocus = true,
+  border_label = "Tasks",
+  data = {
+    n.node({ text = "Code Documentation Standards", is_done = false }),
+    n.node({ text = "Version Control Workflow", is_done = true }),
+    n.node({ text = "Essential API Documentation", is_done = false }),
+    n.node({ text = "Bug Reporting Protocol", is_done = false }),
+    n.node({ text = "Testing Strategy Overview", is_done = true }),
+    n.node({ text = "Code Review Checklist", is_done = false }),
+    n.node({ text = "Agile Sprint Planning Guide", is_done = false }),
+    n.node({ text = "Deployment Process Documentation", is_done = false }),
+    n.node({ text = "Continuous Integration Setup", is_done = false }),
+    n.node({ text = "Security Protocol Documentation", is_done = true }),
+  },
+  on_select = function(node, component)
+    local tree = component:get_tree()
+    node.is_done = not node.is_done
+    tree:render()
+  end,
+  prepare_node = function(node, line, component)
+    if node.is_done then
+      line:append("✔", "String")
+    else
+      line:append("◻", "Comment")
+    end
+
+    line:append(" ")
+    line:append(node.text)
+
+    return line
+  end,
+})
+```
+
+### Properties
+
+#### data
+
+<Property
+  types={['NuiTreeNode[]']}
+/>
+
+#### on_select
+
+<Property 
+  types={['fun(selected: NuiTreeNode, component: Tree): nil']}
+/>
+
+#### on_change
+
+<Property 
+  types={['fun(focused_node: NuiTreeNode, component: Tree): nil']}
+/>
+
+#### prepare_node
+
+<Property 
+  types={['fun(node: NuiTreeNode, line: NuiLine, component: Tree): NuiLine']}
+/>
+
+#### should_skip_item
+
+<Property 
+  types={['fun(node: NuiTreeNode): NuiLine']}
+/>
+
+### Highlight Groups
+
+- `NuiComponentsTreeNodeFocused`
+

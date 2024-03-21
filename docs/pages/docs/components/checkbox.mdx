@@ -1,0 +1,80 @@
+import { Property } from '../../../components/Property'
+
+## Checkbox
+
+`Checkbox` is a component that allows one to make a binary choice (`on` or `off`).
+
+![](/gifs/checkbox-1.gif)
+
+### Usage Example
+
+```lua
+local signal = n.create_signal({
+  is_preview_visible = false,
+})
+
+n.checkbox({
+  label = "Display preview",
+  value = signal.is_preview_visible,
+  on_change = function(is_checked)
+    signal.is_preview_visible = is_checked
+  end,
+})
+```
+
+### Properties
+
+#### label
+
+<Property 
+  types={['string']}
+/>
+
+#### value
+
+<Property 
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+#### on_change
+
+<Property 
+  defaultValue="fn.ignore"
+  types={['fun(is_checked: boolean): nil']}
+/>
+
+#### press_key
+
+<Property 
+  defaultValue='{ "CR", "Space" }'
+  types={['string[]', 'string']}
+/>
+
+#### checked_sign
+
+<Property 
+  defaultValue="[x]"
+  types={['string']}
+/>
+
+#### default_sign 
+
+<Property 
+  defaultValue="[ ]"
+  types={['string']}
+/>
+
+#### prepare_lines
+
+<Property 
+  types={['fun(is_checked: boolean, lines: NuiLine[], component: Checkbox): nil']}
+/>
+
+### Highlight Groups
+
+- `NuiComponentsCheckboxLabel`
+- `NuiComponentsCheckboxIcon`
+- `NuiComponentsCheckboxLabelChecked`
+- `NuiComponentsCheckboxIconChecked`
+

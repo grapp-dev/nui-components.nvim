@@ -1,0 +1,60 @@
+import { Property } from '../../../components/Property'
+
+## Prompt
+
+`Prompt` is a custom single-line [`TextInput`](/docs/components/text-input) component that includes a `prefix` and an `on_submit` callback.
+
+![](/gifs/prompt-1.gif)
+
+### Usage Example
+
+```lua
+n.prompt({
+  prefix = " > ",
+  border_label = {
+    text = "Command",
+    align = "center",
+  },
+  on_submit = function(value)
+    print(value)
+  end,
+})
+```
+
+### Properties
+
+#### value
+
+<Property 
+  types={["string"]}
+/>
+
+#### prefix
+
+<Property 
+  types={["string"]}
+/>
+
+#### on_change
+
+<Property 
+  types={['fun(value: string, component: Prompt): nil']}
+/>
+
+#### on_submit
+
+<Property 
+  types={['fun(value: string, component: Prompt): nil']}
+/>
+
+#### submit_key
+
+<Property 
+  defaultValue="<CR>"
+  types={["string[]", "string"]}
+/>
+
+### Hightlight Groups
+
+- `NuiComponentsPromptPrefix`
+

@@ -1,0 +1,44 @@
+import { Property } from '../../../components/Property'
+
+## Columns
+
+`Columns` is a component built on top of [`Box`](/docs/components/box), it allows you to arrange children horizontally.
+
+```
+ ──────────────────────────────────────────────────────────▶
+┌───────────────────┐┌──────────────────┐┌──────────────────┐
+│                   ││                  ││                  │
+│                   ││                  ││                  │
+│                   ││                  ││                  │
+│                   ││                  ││                  │
+│                   ││                  ││                  │
+│                   ││                  ││                  │
+│                   ││                  ││                  │
+│                   ││                  ││                  │
+└───────────────────┘└──────────────────┘└──────────────────┘
+```
+
+### Usage Example
+
+```lua
+n.columns(<children>) -- flex = 1
+n.columns(2, <children>) -- flex = 2
+n.columns({ flex = 3 }, <children>)
+n.columns({ flex = 0 }, <children>)
+n.columns({ size = 10 }, <children>)
+```
+
+### Properties
+
+#### size
+
+<Property 
+  types={['number']}
+/>
+
+#### flex
+
+<Property 
+  types={['number']}
+/>
+

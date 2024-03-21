@@ -1,0 +1,939 @@
+import { Property } from '../../components/Property'
+import { Method } from '../../components/Method'
+
+## Component
+
+The `Component` class is a powerful tool that enables developers to create customized user interface elements with specific properties, mappings, and events. These elements can be nested inside other components to form a hierarchy, thus allowing for a more complex and modular UI design. 
+
+In addition to enabling the creation of custom components, `Component` also provides various methods for attaching mappings, rendering the component and its children, focusing on the component, retrieving information about the component's state, and setting and getting properties. This allows for greater flexibility when designing a UI, as developers can easily modify the behavior and appearance of their components as needed. 
+
+Furthermore, the `Component` supports modifying the buffer content, handling layout changes, and managing mounting and unmounting phases.
+
+### Create a new component
+
+To create a custom component called `Counter`, we first extend the `Component` class and pass the name of our component as the second parameter. 
+
+```lua showLineNumbers filename="components/counter.lua"
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+return Counter
+```
+
+Next, we define an initialization function for our custom component `Counter` called `:init(props)`. This function takes a single argument `props` that contains all the properties passed to the component during its creation. It initializes the superclass component by passing it the props and some default values.
+
+```lua showLineNumbers filename="components/counter.lua" {5-13}
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+return Counter
+```
+
+We define the property types for our custom component `Counter` using `:prop_types()`. In this case, we define two properties - `value` and `on_change`. This method validates the properties passed to the component.
+
+```lua showLineNumbers filename="components/counter.lua" {15-20}
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+function Counter:prop_types()
+  return {
+    value = "number",
+    on_change = "function",
+  }
+end
+
+return Counter
+```
+
+We'll now proceed to define `:initial_value()`. As the name suggests, this method sets the initial value of the component.
+
+```lua showLineNumbers filename="components/counter.lua" {22-24}
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+function Counter:prop_types()
+  return {
+    value = "number",
+    on_change = "function",
+  }
+end
+
+function Counter:initial_value()
+  return self:get_props().value
+end
+
+return Counter
+```
+
+To get the current value of our custom component `Counter`, we use the function `:get_current_value()`. If the `value` property is a signal value, it will return the value associated with that signal.
+
+```lua showLineNumbers filename="components/counter.lua" {26-34}
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+function Counter:prop_types()
+  return {
+    value = "number",
+    on_change = "function",
+  }
+end
+
+function Counter:initial_value()
+  return self:get_props().value
+end
+
+function Counter:get_current_value()
+  local props = self:get_props()
+
+  if props.instance:is_signal("value") then
+    return props.value
+  end
+
+  return Counter.super.get_current_value(self)
+end
+
+return Counter
+```
+
+We define some keyboard mappings using `:mappings()`. In this case, we define two mappings: one increments the counter when the user presses the `up` arrow, and another decrements it when the user presses the `down` arrow.
+
+```lua showLineNumbers filename="components/counter.lua" {36-58}
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+function Counter:prop_types()
+  return {
+    value = "number",
+    on_change = "function",
+  }
+end
+
+function Counter:initial_value()
+  return self:get_props().value
+end
+
+function Counter:get_current_value()
+  local props = self:get_props()
+
+  if props.instance:is_signal("value") then
+    return props.value
+  end
+
+  return Counter.super.get_current_value(self)
+end
+
+function Counter:mappings()
+  local props = self:get_props()
+  return {
+    {
+      mode = { "n" },
+      key = "<Up>",
+      handler = function()
+        local value = self:get_current_value() + 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+    {
+      mode = { "n" },
+      key = "<Down>",
+      handler = function()
+        local value = self:get_current_value() - 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+  }
+end
+
+return Counter
+```
+
+To display the current value, we use the `:get_lines()` method. This method returns a new `NuiLine` containing a current value.
+
+```lua showLineNumbers filename="components/counter.lua" {60-64}
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+function Counter:prop_types()
+  return {
+    value = "number",
+    on_change = "function",
+  }
+end
+
+function Counter:initial_value()
+  return self:get_props().value
+end
+
+function Counter:get_current_value()
+  local props = self:get_props()
+
+  if props.instance:is_signal("value") then
+    return props.value
+  end
+
+  return Counter.super.get_current_value(self)
+end
+
+function Counter:mappings()
+  local props = self:get_props()
+  return {
+    {
+      mode = { "n" },
+      key = "<Up>",
+      handler = function()
+        local value = self:get_current_value() + 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+    {
+      mode = { "n" },
+      key = "<Down>",
+      handler = function()
+        local value = self:get_current_value() - 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+  }
+end
+
+function Counter:get_lines()
+  local line = Line()
+  line:append(tostring(self:get_current_value()))
+  return line
+end
+
+return Counter
+```
+
+We define a layout method using `:on_layout()`. This method calculates the height and width required for it to display properly. In this case, we calculate the width based on the length of the line returned by the `get_lines()` method, and set the height to `1` (a single line).
+
+```lua showLineNumbers filename="components/counter.lua" {66-71}
+local Component = require("nui-components.component")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+function Counter:prop_types()
+  return {
+    value = "number",
+    on_change = "function",
+  }
+end
+
+function Counter:initial_value()
+  return self:get_props().value
+end
+
+function Counter:get_current_value()
+  local props = self:get_props()
+
+  if props.instance:is_signal("value") then
+    return props.value
+  end
+
+  return Counter.super.get_current_value(self)
+end
+
+function Counter:mappings()
+  local props = self:get_props()
+  return {
+    {
+      mode = { "n" },
+      key = "<Up>",
+      handler = function()
+        local value = self:get_current_value() + 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+    {
+      mode = { "n" },
+      key = "<Down>",
+      handler = function()
+        local value = self:get_current_value() - 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+  }
+end
+
+function Counter:get_lines()
+  local line = Line()
+  line:append(tostring(self:get_current_value()))
+  return line
+end
+
+function Counter:on_layout()
+  return {
+    height = 1,
+    width = self:get_lines():width(),
+  }
+end
+
+return Counter
+```
+
+Finally, we have the `:on_update()` method, called whenever the component needs to be updated, such as when a signal is emitted. This method modifies the buffer content of our custom component `Counter`, rendering the `Line` component returned by our `get_lines()` method.
+
+```lua showLineNumbers filename="components/counter.lua" {74-79}
+local Component = require("nui-components.component")
+local Line = require("nui.line")
+
+local Counter = Component:extend("Counter")
+
+function Counter:init(props)
+  Counter.super.init(
+    self,
+    vim.tbl_extend("force", {
+      value = 1,
+      on_change = function() end,
+    }, props)
+  )
+end
+
+function Counter:prop_types()
+  return {
+    value = "number",
+    on_change = "function",
+  }
+end
+
+function Counter:initial_value()
+  return self:get_props().value
+end
+
+function Counter:get_current_value()
+  local props = self:get_props()
+
+  if props.instance:is_signal("value") then
+    return props.value
+  end
+
+  return Counter.super.get_current_value(self)
+end
+
+function Counter:mappings()
+  local props = self:get_props()
+  return {
+    {
+      mode = { "n" },
+      key = "<Up>",
+      handler = function()
+        local value = self:get_current_value() + 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+    {
+      mode = { "n" },
+      key = "<Down>",
+      handler = function()
+        local value = self:get_current_value() - 1
+        self:set_current_value(value)
+        props.on_change(value)
+      end,
+    },
+  }
+end
+
+function Counter:get_lines()
+  local line = Line()
+  line:append(tostring(self:get_current_value()))
+  return line
+end
+
+function Counter:on_layout()
+  return {
+    height = 1,
+    width = self:get_lines():width(),
+  }
+end
+
+function Counter:on_update()
+  self:modify_buffer_content(function()
+    local content = self:get_lines()
+    content:render(self.bufnr, -1, 1)
+  end)
+end
+
+return Counter
+```
+
+Usage example:
+
+```lua showLineNumbers
+local n = require("nui-components")
+local counter = require("components.counter")
+
+local renderer = n.create_renderer({
+  width = 60,
+  height = 3,
+})
+
+local signal = n.create_signal({
+  value = 1,
+})
+
+local body = counter({
+  border_label = {
+    text = "Counter",
+    align = "center",
+  },
+  autofocus = true,
+  value = signal.value,
+  on_change = function(value)
+    signal.value = value
+  end,
+})
+
+renderer:render(body)
+```
+
+And the final result of what we have already implemented:
+
+![](/gifs/custom-component.gif)
+
+### Properties
+
+#### size
+
+> Determines the size of the component based on the direction of the component's parent.
+
+<Property 
+  types={['number']}
+/>
+
+#### flex
+
+> Determines whether a component should grow or shrink based on the size of its container. When the `flex` is set to `0`, it will be sized according to its own content. On the other hand, if the `flex` value is set to a number greater than `0`, it will be flexible and will grow or shrink based on the available space in its container.
+
+<Property 
+  types={['number']}
+/>
+
+#### id
+
+> Assigns a unique identifier to the component.
+
+<Property 
+  defaultValue="tostring(math.random())"
+  types={['string']}
+/>
+
+#### hidden
+
+> Defines whether or not the component should be displayed.
+
+<Property 
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+#### autofocus
+
+> Indicates whether the component should receive focus automatically upon mounting.
+
+<Property 
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+#### is_focusable
+
+> Indicates whether the component can be focused or not.
+
+<Property 
+  defaultValue="true"
+  types={['boolean']}
+/>
+
+#### direction
+
+> Determines the direction in which the content of the component will be displayed.
+
+<Property 
+  defaultValue="row"
+  types={["'row' | 'column'"]}
+/>
+
+#### border_label
+
+> Defines the label displayed on the border of the component.
+
+<Property 
+  types={['string | NuiText | BorderLabel']}
+>
+Where `BorderLabel` is:
+
+```lua
+{
+  text = NuiText | string,
+  icon = string,
+  edge = top | bottom,
+  align = left | center | right
+}
+```
+</Property>
+
+#### border_style
+
+> Defines the style property of the border around the component.
+
+<Property 
+  defaultValue="row"
+  types={["'double' | 'none' | 'rounded' | 'shadow' | 'single' | 'solid'"]}
+/>
+
+#### padding
+
+> Defines the amount of padding space that surrounds the content area of the component.
+
+<Property 
+  types={['number[] | Padding']}
+>
+Where `Padding` is:
+
+```lua
+{
+  top = number,
+  right = number,
+  bottom = number,
+  left = number
+}
+```
+</Property>
+
+#### global_focus_key
+
+> Specifies a global key used to focus on the component.
+
+<Property
+  types={['string']}
+/>
+
+#### on_focus
+
+> Defines a callback function that is executed when the component gains focus.
+
+<Property
+  defaultValue="fn.ignore"
+  types={['fun(component: Component): nil']}
+/>
+
+#### on_blur
+
+> Defines a callback function that is executed when the component loses focus.
+
+<Property
+  defaultValue="fn.ignore"
+  types={['fun(component: Component): nil']}
+/>
+
+#### on_mount
+
+> Defines a callback function that is executed when the component is mounted.
+
+<Property
+  defaultValue="fn.ignore"
+  types={['fun(component: Component): nil']}
+/>
+
+#### on_unmount
+
+> Defines a callback function that is executed when the component is unmounted.
+
+<Property
+  defaultValue="fn.ignore"
+  types={['fun(component: Component): nil']}
+/>
+
+#### events
+
+> Defines any events that the component listens for and responds to accordingly.
+
+<Property
+  types={['fun(component: Component): Event[]']}
+>
+Where `Event` is:
+
+```lua
+{
+  event = string | string[],
+  handler = function,
+  options? = {
+    once? = boolean 
+    nested? = boolean
+  }
+}
+```
+
+For further information, please refer to the documentation of [`nui.nvim`](https://github.com/MunifTanjim/nui.nvim/blob/main/lua/nui/popup/README.md#popupon).
+</Property>
+
+#### mappings
+
+> Add additional keyboard shortcuts for the component.
+
+<Property
+  types={['fun(component: Component): Mapping[]']}
+>
+Where `Mapping` is:
+
+```lua
+{
+  mode = string[] | string, -- "n", "i", "v"
+  key = string,
+  handler = function
+}
+```
+</Property>
+
+#### validate
+
+> Defines a callback function that is executed to validate the component's state. This is used along with the `Form` component.
+
+<Property
+  types={['fun(value T): boolean']}
+/>
+
+### Methods
+
+#### redraw
+
+> Redraws the component's visual representation.
+
+<Method name="redraw" />
+
+#### render
+
+> Creates the component's visual representation
+
+<Method name="render" />
+
+#### focus
+
+> Lets the user focus on a specific component.
+
+<Method name="focus" />
+
+#### events
+
+> Allows the developer to define custom events for the component.
+
+<Method 
+  name="events"
+  returns="Event[]"
+/>
+
+#### mappings
+
+> Allows the developer to define custom mappings for the component.
+
+<Method 
+  name="mappings"
+  returns="Mapping[]"
+/>
+
+#### initial_value
+
+> Sets the component's initial content value.
+
+<Method 
+  name="initial_value"
+  returns="T"
+/>
+
+#### modify_buffer_content
+
+> Allows the user to modify the buffer content of the component.
+
+<Method 
+  name="modify_buffer_content"
+  args={[
+    ['callback_fn', 'fun(): nil']
+  ]}
+/>
+
+
+#### is_hidden
+
+> Determines whether or not a specific component is hidden.
+
+<Method 
+  name="is_hidden"
+  returns="boolean"
+/>
+
+#### is_focused
+
+> Determines whether or not a specific component is focused.
+
+<Method 
+  name="is_focused"
+  returns="boolean"
+/>
+
+#### is_focusable
+
+> Determines whether or not a specific component is focusable.
+
+<Method 
+  name="is_focusable"
+  returns="boolean"
+/>
+
+#### get_id
+
+> Returns the unique identifier for the current component instance.
+
+<Method 
+  name="get_id"
+  returns="string"
+/>
+
+#### get_direction
+
+> Returns the current direction of the component.
+
+<Method 
+  name="get_direction"
+  returns="column | row"
+/>
+
+#### get_children
+
+> Returns a table of child components for the current component instance.
+
+<Method 
+  name="get_children"
+  returns="Component[] | nil"
+/>
+
+#### get_flatten_children
+
+> Returns a flattened table of all child components for the current component instance.
+
+<Method 
+  name="get_flatten_children"
+  returns="Component[] | nil"
+/>
+
+#### get_only_child
+
+> Returns the single (first) child component instance for the current component instance.
+
+<Method 
+  name="get_only_child"
+  returns="Component | nil"
+/>
+
+#### get_parent
+
+> Returns the current component's parent component instance, if any (`nil` otherwise).
+
+<Method 
+  name="get_parent"
+  returns="Component | nil"
+/>
+
+#### get_renderer
+
+> Returns the current component's renderer instance.
+
+<Method 
+  name="get_renderer"
+  returns="Renderer"
+/>
+
+#### get_props
+
+> Returns a table of props for the current component instance.
+
+<Method 
+  name="get_props"
+  returns="table"
+/>
+
+#### get_current_value
+
+> Returns the current value of the component if a value is set (`nil` otherwise).
+
+<Method 
+  name="get_current_value"
+  returns="T | nil"
+/>
+
+#### get_focus_index
+
+> Returns the focus index for the current component instance
+
+<Method 
+  name="get_focus_index"
+  returns="number | nil"
+/>
+
+#### set_border_text
+
+> Allows the developer to set border text values for a specific component's edge. text and align.
+
+<Method 
+  name="set_border_text"
+  args={[
+    ['edge', "'top' | 'bottom'"],
+    ['text', 'string'],
+    ['align', "'left' | 'center' | 'right'"],
+  ]}
+/>
+#### set_buffer_option
+
+> The method is used to modify buffer options for the current component instance.
+
+<Method 
+  name="set_buffer_option"
+  args={[
+    ['key', 'string'],
+    ['value', 'any']
+  ]}
+/>
+
+#### set_current_value
+
+> Sets the specific value for the current component instance.
+
+<Method 
+  name="set_current_value"
+  args={[
+    ['value', 'T']
+  ]}
+/>
+
+#### prop_types
+
+> Returns a table of specific prop types for the current component. This is used to validate properties passed to the component.
+
+<Method name="prop_types" returns="table" />
+
+#### on_renderer_initialization
+
+> The method is called during a component's renderer's initialization process.
+
+<Method 
+  name="on_renderer_initialization" 
+  args={[
+    ['renderer', 'Renderer'],
+    ['parent', 'Component | nil'],
+    ['children', 'Component[] | nil'],
+  ]}
+/>
+
+#### on_update
+
+> The method gets executed every time the value of the signal, which is passed as a property, changes.
+
+<Method name="on_update" />
+
+#### on_mount
+
+> The method is called when the component is first mounted into the component tree.
+
+<Method name="on_mount" />
+
+#### on_unmount
+
+> The method is called when the component is removed from the component tree.
+
+<Method name="on_unmount" />
+
+#### on_layout
+
+> The method is called when the layout of the component has been updated.
+
+<Method name="on_layout" />
+
+#### on_visibility_change
+
+> The method is called whenever the component's visibility state changes.
+
+<Method name="on_visibility_change" />
+

@@ -1,0 +1,66 @@
+
+import { Property } from '../../../components/Property'
+
+## TextInput
+
+`TextInput` is a component that allows you to enter any text. 
+
+![](/gifs/text-input-1.gif)
+
+### Usage Example
+
+```lua
+local signal = n.create_signal({ 
+  value = "hello world",
+})
+
+n.text_input({
+  autofocus = true,
+  autoresize = true,
+  size = 1,
+  value = signal.value,
+  border_label = "Description",
+  max_lines = 5,
+  on_change = function(value, component)
+    signal.value = value
+
+    component:modify_buffer_content(function()
+      component:set_border_text("bottom", "Length: " .. #value, "right")
+    end)
+  end,
+  on_mount = function(component)
+    local initial_value = signal.value:get_value()
+    component:set_border_text("bottom", "Length: " .. #initial_value, "right")
+  end,
+})
+
+```
+
+### Properties
+
+#### autoresize 
+
+<Property
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+#### max_lines
+
+<Property 
+  types={['number']}
+/>
+
+#### value
+
+<Property 
+  defaultValue='""'
+  types={['string']}
+/>
+
+#### on_change
+
+<Property 
+  types={['fun(value: string, component: TextInput): nil']}
+/>
+

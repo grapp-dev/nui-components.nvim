@@ -1,0 +1,69 @@
+
+import { Property } from '../../../components/Property'
+
+## Button
+
+`Button` is a component that allows one to interact with it by pressing it.
+
+![](/gifs/button-1.gif)
+
+### Usage Example
+
+```lua
+n.button({
+  label = "Quit",
+  global_press_key = "<C-d>"
+  on_press = function()
+    -- do something on press
+  end,
+})
+```
+
+### Properties
+
+#### label
+
+<Property 
+required={true}
+  types={['string']}
+/>
+
+#### on_press
+
+<Property 
+  defaultValue="fn.ignore"
+  types={['fun(): nil']}
+/>
+
+#### press_key
+
+<Property 
+  defaultValue='{ "CR", "Space" }'
+  types={['string[]', 'string']}
+/>
+
+#### is_active
+
+<Property 
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+#### global_press_key
+
+<Property 
+  types={['string[]', 'string']}
+/>
+
+#### prepare_lines
+
+<Property 
+  types={['fun(lines: NuiLine[], component: Button): nil']}
+/>
+
+### Highlight Groups
+
+- `NuiComponentsButton`
+- `NuiComponentsButtonActive`
+- `NuiComponentsButtonFocus`
+

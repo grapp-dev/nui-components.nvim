@@ -1,0 +1,66 @@
+import { Property } from '../../../components/Property'
+import { Callout } from 'nextra/components';
+
+## Form
+
+`Form` offers a developer-friendly and organized approach to designing forms with built-in validation.
+
+![](/gifs/form-1.gif)
+
+### Usage Example
+
+```lua
+n.form(
+  {
+    id = "form",
+    submit_key = "<S-CR>",
+    on_submit = function(is_valid)
+      print(is_valid)
+    end,
+  },
+  n.text_input({
+    autofocus = true,
+    autoresize = true,
+    size = 1,
+    border_label = "Title",
+    max_lines = 5,
+    validate = n.validator.min_length(3),
+  }),
+  n.text_input({
+    flex = 1,
+    border_label = "Description",
+    validate = n.validator.compose(n.validator.min_length(4), n.validator.max_length(20)),
+  })
+)
+```
+
+### Properties
+
+#### on_submit
+
+<Property 
+  defaultValue="fn.ignore"
+  types={['fun(is_valid: boolean): nil']}
+/>
+
+#### submit_key
+
+<Property 
+  defaultValue="<C-CR>"
+  types={['string[]', 'string']}
+/>
+
+### Validators
+
+<Callout type="info">
+  PRs with new validators are welcome!
+</Callout>
+
+Available validation functions:
+
+- `min_length`
+- `max_length`
+- `equals`
+- `contains`
+
+

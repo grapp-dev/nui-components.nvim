@@ -1,0 +1,27 @@
+{
+  "index": {
+    "type": "page",
+    "title": "NuiComponents",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
+  },
+  "docs": {
+    "type": "page",
+    "title": "Documentation"
+  },
+  "about": {
+    "type": "page",
+    "title": "About Grapp.Dev",
+    "theme": {
+      "typesetting": "article"
+    }
+  },
+  "sponsor_link": {
+    "type": "page",
+    "title": "Sponsor ↗",
+    "href": "https://github.com/sponsors/mobily",
+    "newWindow": true
+  }
+}

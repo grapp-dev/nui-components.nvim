@@ -1,0 +1,97 @@
+import { Property } from '../../../components/Property'
+
+## Select
+
+`Select` is a [`Tree`](/docs/components/tree) component that collects user-provided information from a list of options.
+
+![](/gifs/select-1.gif)
+
+### Usage Example
+
+```lua
+local signal = n.create_signal({ 
+  selected = { "poland" }
+})
+
+n.select({
+  border_label = "Select countries",
+  selected = signal.selected,
+  data = {
+    n.separator("Europe"),
+    n.option("Poland", { id = "poland" }),
+    n.option("Spain", { id = "spain" }),
+    n.option("Portugal", { id = "portugal" }),
+    n.option("France", { id = "france" }),
+    n.option("Germany", { id = "germany" }),
+    n.separator("North America"),
+    n.option("USA", { id = "usa" }),
+    n.option("Canada", { id = "canada" }),
+  },
+  multiselect = true,
+  on_select = function(nodes)
+    signal.selected = nodes
+  end,
+})
+```
+
+### Properties
+
+#### data
+
+<Property
+  types={['NuiTreeNode[]']}
+/>
+
+#### multiselect
+
+<Property
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+#### selected
+
+If `multiselect` is set to `true`:
+
+<Property 
+  types={['string[] | NuiTreeNode[]']}
+/>
+
+Otherwise:
+
+<Property 
+  types={['string | NuiTreeNode']}
+/>
+
+#### on_select
+
+If `multiselect` is set to `true`:
+
+<Property 
+  types={['fun(selected: NuiTreeNode[], component: Select): nil']}
+/>
+
+Otherwise:
+
+<Property 
+  types={['fun(selected: NuiTreeNode, component: Select): nil']}
+/>
+
+#### prepare_node
+
+<Property 
+  types={['fun(is_selected: boolean, node: NuiTreeNode, component: Select): NuiLine']}
+/>
+
+#### should_skip_item
+
+<Property 
+  types={['fun(node: NuiTreeNode, is_separator: boolean): NuiLine']}
+/>
+
+### Highlight Groups
+
+- `NuiComponentsSelectOption`
+- `NuiComponentsSelectOptionSelected`
+- `NuiComponentsSelectSeparator`
+- `NuiComponentsSelectNodeFocused`

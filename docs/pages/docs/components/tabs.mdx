@@ -1,0 +1,92 @@
+
+import { Property } from '../../../components/Property'
+
+## Tabs
+
+`Tabs` is a component that allows you to organize your content within multiple tabs.
+
+![](/gifs/tabs-1.gif)
+
+### Usage Example
+
+```lua
+local signal = n.create_signal({
+  active_tab = "tab-1",
+})
+
+local is_tab_active = n.is_active_factory(signal.active_tab)
+
+n.tabs(
+  { active_tab = signal.active_tab },
+  n.columns(
+    { flex = 0 },
+    n.button({
+      label = "U Tab #1",
+      global_press_key = "<S-u>",
+      is_active = is_tab_active("tab-1"),
+      on_press = function()
+        signal.active_tab = "tab-1"
+      end,
+    }),
+    n.gap(1),
+    n.button({
+      label = "I Tab #2",
+      global_press_key = "<S-i>",
+      is_active = is_tab_active("tab-2"),
+      on_press = function()
+        signal.active_tab = "tab-2"
+      end,
+    }),
+    n.gap(1),
+    n.button({
+      label = "O Tab #3",
+      global_press_key = "<S-o>",
+      is_active = is_tab_active("tab-3"),
+      on_press = function()
+        signal.active_tab = "tab-3"
+      end,
+    })
+  ),
+  n.gap(1),
+  n.tab(
+    { id = "tab-1" },
+    n.paragraph({
+      lines = "nui.components",
+    })
+  ),
+  n.tab(
+    { id = "tab-2" },
+    n.rows(
+      n.text_input({
+        size = 1,
+        border_label = "Title",
+      }),
+      n.text_input({
+        flex = 1,
+        border_label = "Description",
+      })
+    )
+  ),
+  n.tab(
+    { id = "tab-3" },
+    n.paragraph({
+      lines = "tab #3 content",
+    })
+  )
+)
+```
+
+### Properties
+
+#### active_tab
+
+<Property
+  types={['string']}
+/>
+
+#### id `n.tab`
+
+<Property
+  types={['string']}
+/>
+

@@ -1,0 +1,47 @@
+import { Property } from '../../../components/Property'
+
+## Gap
+
+`Gap` creates space between various components either vertically or horizontally.
+
+```
+┌───────────────────┐                    ┌──────────────────┐
+│                   │                    │                  │
+│                   │                    │                  │
+│                   │                    │                  │
+│                   │      flex = 1      │                  │
+│                   │ ─────────────────▶ │                  │
+│                   │                    │                  │
+│                   │                    │                  │
+│                   │                    │                  │
+└───────────────────┘                    └──────────────────┘
+       size = 1
+┌───────────────────────────────────────────────────────────┐
+│                                                           │
+│                                                           │
+│                                                           │
+└───────────────────────────────────────────────────────────┘
+```
+
+### Usage Example
+
+```lua
+n.gap(1) -- size = 1
+n.gap({ flex = 1 })
+n.gap({ size = 10 })
+```
+
+### Properties
+
+#### size
+
+<Property 
+  types={['number']}
+/>
+
+#### flex
+
+<Property 
+  types={['number']}
+/>
+

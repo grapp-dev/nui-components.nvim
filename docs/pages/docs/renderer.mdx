@@ -1,0 +1,276 @@
+import { Property } from '../../components/Property'
+import { Method } from '../../components/Method'
+
+## Renderer
+
+`Renderer` is a key element in building UI with `NuiComponents`. `Renderer` takes responsibility for rendering, layout, focus management, and keybindings for the components it contains. Developers can create complex interfaces by nesting components within each other, and can also reuse them with different configurations.
+
+### Usage Example
+
+```lua
+local renderer = n.create_renderer({
+  width = 80,
+  height = 40,
+})
+
+local signal = n.create_signal(…)
+
+local subscription = signal:observe(function(previous_state, current_state)
+  -- call side effects
+end)
+
+local body = n.rows(…)
+
+renderer:add_mappings({
+  {
+    mode = { "n", "i" },
+    from = "<leader>c",
+    to = function()
+      renderer:close()
+    end,
+  },
+})
+
+renderer:on_unmount(function()
+  subscription:unsubscribe()
+end)
+
+renderer:render(body)
+```
+
+### Properties
+
+#### width
+  
+> Refers to the number of characters that can be displayed horizontally by the renderer. 
+
+<Property 
+  required={true}
+  types={['number']}
+/>
+
+#### height
+
+> Refers to the number of lines that can be displayed vertically by the renderer.
+
+<Property 
+  required={true}
+  types={['number']}
+/>
+
+#### position
+
+> Sets the window position.
+
+<Property 
+  defaultValue="50%"
+  types={['string', 'number', 'table']}
+>
+For further information, please refer to the documentation of [`nui.nvim`](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/layout#position).
+</Property>
+
+#### relative
+
+> Sets the window layout to "floating" (`NuiComponents` doesn't support split layouts at the moment).
+
+<Property 
+  defaultValue="editor"
+  types={['string', 'table']}
+>
+For further information, please refer to the documentation of [`nui.nvim`](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/layout#relative).
+</Property>
+
+#### `keymap`
+
+> A table containing a default global key bindings for the renderer.
+
+<Property 
+  defaultValue={{
+    close: "<Esc>",
+    focus_next: "<Tab>",
+    focus_prev: "<S-Tab>"
+  }}
+  types={['table']}
+/>
+
+#### on_mount
+
+> Registers a callback that will be executed when the component tree is mounted for the first time.
+
+<Property 
+  defaultValue="fn.ignore"
+  types={['function']}
+/>
+
+#### on_unmount
+
+> Registers a callback function to be executed when the component tree is unmounted (i.e., the window is closed).
+
+<Property 
+  defaultValue="fn.ignore"
+  types={['function']}
+/>
+
+### Methods
+
+#### render
+
+> Renders the component tree.
+
+<Method 
+  name="render" 
+  args={[
+    ['component', 'Component'],
+  ]}
+/>
+
+#### schedule
+
+> Schedules a callback to be executed after the current update cycle has finished.
+
+<Method 
+  name="schedule" 
+  args={[
+    ['schedule_fn', 'fun(): nil'],
+  ]}
+/>
+
+#### redraw
+
+> Forces an immediate redraw of the component tree.
+
+<Method name="redraw" />
+
+#### focus
+
+> Sets the focus to the current renderer window.
+
+<Method name="focus" />
+
+#### close
+
+> Closes the current renderer window.
+
+<Method name="close" />
+
+#### add_mappings
+
+> Adds additional keyboard shortcuts for the component tree.
+
+<Method 
+  name="add_mappings" 
+  args={[
+    ['mappings', 'Mapping[]'],
+  ]}
+>
+Where `Mapping` is:
+
+```lua
+{
+  mode = string[] | string, -- "n", "i", "v"
+  key = string,
+  handler = function
+}
+```
+</Method>
+
+#### set_size
+
+> Changes the size of the renderer window.
+
+<Method 
+  name="set_size" 
+  args={[
+    ['size', 'Size'],
+  ]}
+>
+Where `Size` is:
+
+```lua
+{
+  width = number,
+  height = number
+}
+```
+
+</Method>
+
+#### get_size
+
+> Returns the current size of the renderer window. 
+
+<Method 
+  name="get_size" 
+  returns="Size"
+/>
+
+#### get_component_by_id
+
+> Searches the component tree for a component with the specified `id` and returns it if found.
+
+<Method 
+  name="get_component_by_id" 
+  args={[
+    ['id', 'string'],
+  ]}
+  returns="Component | nil"
+/>
+
+#### get_origin_winid
+
+> Returns the original window `id` when the component tree was first rendered. 
+
+<Method 
+  name="get_origin_winid" 
+  returns="number"
+/>
+
+#### get_last_focused_component
+
+> Returns the last focused component within the component tree.
+
+<Method 
+  name="get_last_focused_component" 
+  returns="Component"
+/>
+
+#### get_focusable_components
+
+> Returns a list of all focusable components within the tree.
+
+<Method 
+  name="get_focusable_components" 
+  returns="Component[]"
+/>
+
+#### get_component_tree
+
+> Returns the entire internal tree used by the component
+
+<Method 
+  name="get_component_tree" 
+  returns="Component[]"
+/>
+
+#### on_mount
+
+> Registers a callback function to be executed when the component tree is first mounted.
+
+<Method 
+  name="on_mount" 
+  args={[
+    ['mount_fn', 'fun(): nil'],
+  ]}
+/>
+
+#### on_unmount
+
+> Registers a function to be called when the component tree is unmounted.
+
+<Method 
+  name="on_unmount" 
+  args={[
+    ['unmount_fn', 'fun(): nil'],
+  ]}
+/>
+

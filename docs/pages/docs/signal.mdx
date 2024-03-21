@@ -1,0 +1,302 @@
+import { Method } from '../../components/Method'
+
+## Signal
+
+`Signal` follows the reactive programming paradigm. It allows the creation of signal values, which are objects that emit values over time, and provides methods for observing and manipulating them. 
+
+`Signal` values are similar to variables in that they store data. However, unlike variables, signal values can change over time. Signal values are triggered by mutating them, and when they are triggered, they emit a new value. These values can be transformed and combined using operators. Operators allow for the creation of more complex data flows. By chaining together operators, it is possible to handle a wide range of use cases. `Signal` values can eventually be observed to call side effect functions.
+
+### Usage Example
+
+Let's start by defining a signal. The signal has two properties: `is_checked` (initially `false`) and `text` (empty string), which we'll use later.
+
+```lua showLineNumbers {8-11}
+local n = require("nui-components")
+
+local renderer = n.create_renderer({
+  width = 60,
+  height = 12,
+})
+
+local signal = n.create_signal({
+  is_checked = false,
+  text = "",
+})
+
+local body = n.rows()
+
+renderer:render(body)
+```
+
+Now, let's use `n.checkbox` to create a row with a checkbox component. This checkbox will allow us to display a text input component. The checkbox has the following properties: `autofocus` (set to true), `label`, `value` (bound to the `is_checked` property of the signal). When you press the checkbox  (using `<CR>` or `<Space>`), we update the `is_checked` property of the signal.
+
+
+```lua showLineNumbers {14-21}
+local n = require("nui-components")
+
+local renderer = n.create_renderer({
+  width = 60,
+  height = 12,
+})
+
+local signal = n.create_signal({
+  is_checked = false,
+  text = "",
+})
+
+local body = n.rows(
+  n.checkbox({
+    autofocus = true,
+    label = "Display text_input component",
+    value = signal.is_checked,
+    on_change = function(is_checked)
+      signal.is_checked = is_checked
+    end,
+  })
+)
+
+renderer:render(body)
+```
+
+Let's create another row. This time, we'll have two nested rows. Both rows will be hidden when the `is_checked` property of the signal is `false`. The first row contains a text input component with the following properties: `flex` (set to 1), `value` (bound to the `text` property of the signal). When the user types something, we update the `text` property of the signal.
+
+```lua showLineNumbers {22-33}
+local n = require("nui-components")
+
+local renderer = n.create_renderer({
+  width = 60,
+  height = 12,
+})
+
+local signal = n.create_signal({
+  is_checked = false,
+  text = "",
+})
+
+local body = n.rows(
+  n.checkbox({
+    autofocus = true,
+    label = "Display text_input component",
+    value = signal.is_checked,
+    on_change = function(is_checked)
+      signal.is_checked = is_checked
+    end,
+  }),
+  n.rows(
+    {
+      flex = 1,
+      hidden = signal.is_checked:negate(),
+    },
+    n.text_input({
+      flex = 1,
+      value = signal.text,
+      on_change = function(value)
+        signal.text = value
+      end,
+    })
+  )
+)
+
+renderer:render(body)
+```
+
+Next, let's use `n.columns` to create the second row with two columns. The first column fills all available horizontal space. The second column contains a button component. When you press the button, we clear the text input.
+
+
+```lua showLineNumbers {34-42}
+local n = require("nui-components")
+
+local renderer = n.create_renderer({
+  width = 60,
+  height = 12,
+})
+
+local signal = n.create_signal({
+  is_checked = false,
+  text = "",
+})
+
+local body = n.rows(
+  n.checkbox({
+    autofocus = true,
+    label = "Display text_input component",
+    value = signal.is_checked,
+    on_change = function(is_checked)
+      signal.is_checked = is_checked
+    end,
+  }),
+  n.rows(
+    {
+      flex = 1,
+      hidden = signal.is_checked:negate(),
+    },
+    n.text_input({
+      flex = 1,
+      value = signal.text,
+      on_change = function(value)
+        signal.text = value
+      end,
+    }),
+    n.columns(
+      { flex = 0 },
+      n.gap({ flex = 1 }),
+      n.button({
+        label = "Clear",
+        on_press = function()
+          signal.text = ""
+        end,
+      })
+    )
+  )
+)
+
+renderer:render(body)
+```
+
+And here's the final result:
+
+![](/gifs/signal-usage-example.gif)
+
+### Methods
+
+#### observe
+
+> The `observe` method allows you to keep track of changes that occur in a signal. You can also specify a debounce delay. To prevent any memory leaks, it's important to remember to call the `unsubscribe` method when you no longer need to observe the changes.
+
+<Method 
+  name="observe"
+  args={[
+    ['next_fn', 'fun(previous_state: table, current_state: table): nil'],
+    ['debounce_ms?', 'number'],
+  ]}
+  returns="Subscription"
+/>
+
+#### get_value
+
+> Returns the current value of the `Signal` object.
+
+<Method name="get_value" returns="table" />
+
+### Methods / Operators (Signal Value)
+
+#### get_value
+
+> Returns the current value of the corresponding key from the `Signal` object.
+
+<Method name="get_value" returns="T" />
+
+#### get_observer_value
+
+> Returns the current value returned by the observer subscription.
+
+<Method name="get_observer_value" returns="T" />
+
+#### get_observable
+
+> Returns an observable that emits the values of the corresponding key in the `Signal` object over time.
+
+<Method name="get_observable" returns="Observable" />
+
+#### map
+
+> Applies a mapping function to each value emitted by the observable.
+
+<Method 
+  name="map" 
+  args={[
+    ['map_fn', 'fun(value: T): R'],
+  ]}
+  returns="SignalValue" 
+/>
+
+#### negate
+
+> Negates the emitted value using a mapping function.
+
+<Method name="negate" returns="SignalValue" />
+
+#### tap
+
+> Executes a function with each value emitted by the observable.
+
+<Method 
+  name="tap" 
+  args={[
+    ['tap_fn', 'fun(value: T): nil'],
+  ]}
+  returns="SignalValue" 
+/>
+
+#### filter
+
+> Filters the values emitted by the observable using a predicate function.
+
+<Method 
+  name="filter" 
+  args={[
+    ['pred_fn', 'fun(value: T): boolean'],
+  ]}
+  returns="SignalValue" 
+/>
+
+#### skip
+
+> Skips the first `n` values emitted by the observable.
+
+<Method 
+  name="skip" 
+  args={[
+    ['n', 'number'],
+  ]}
+  returns="SignalValue" 
+/>
+
+#### combine_latest
+
+> Combines the latest values from multiple SignalValue objects (using the provided arguments as keys).
+
+<Method 
+  name="combine_latest" 
+  args={[
+    ['...', 'SignalValue[]'],
+  ]}
+  returns="SignalValue" 
+/>
+
+#### scan
+
+> Applies a scan function to each value emitted by the observable and accumulates the result into an internal variable, returning the final value.
+
+<Method 
+  name="scan" 
+  args={[
+    ['scan_fn', 'fun(acc: T, value: R): T'],
+    ['initial_value', 'T'],
+  ]}
+  returns="SignalValue" 
+/>
+
+#### observe
+
+> Subscribes an observer function to the observable. The observer function is called every time a new value is emitted by the observable.
+
+<Method 
+  name="observe" 
+  args={[
+    ['on_next', 'fun(value: T): nil'],
+  ]}
+/>
+
+#### unsubscribe
+
+> Unsubscribes the observer subscription from the observable, cancelling any further updates.
+
+<Method name="unsubscribe" />
+
+#### dup
+
+>  Returns a new SignalValue object with a reference to the same underlying subject and key.
+
+<Method name="dup" returns="SignalValue" />
+

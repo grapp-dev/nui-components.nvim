@@ -1,0 +1,104 @@
+.root {
+  position: relative;
+}
+
+.content {
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: 40px 0 140px;
+  padding-left: max(env(safe-area-inset-left), 1.5rem);
+  padding-right: max(env(safe-area-inset-right), 1.5rem);
+  max-width: 90rem;
+  text-align: center;
+}
+
+.headline {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  background-image: linear-gradient(146deg, #000, #444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 2.8rem;
+  font-size: min(3.2rem, max(8vw, 2.6rem));
+  font-feature-settings: initial;
+  line-height: 1.05;
+  letter-spacing: -0.5rem;
+  font-family: 'Silkscreen', sans-serif;
+  font-weight: 400;
+
+  :global(.dark) & {
+    background-image: linear-gradient(146deg, #0089E6, #38ACFB);
+  }
+}
+
+.subtitle {
+  margin-top: 1.25em;
+  font-size: 1.3rem;
+  font-size: min(1.3rem, max(3.5vw, 1.1rem));
+  font-feature-settings: initial;
+  font-weight: 400;
+  line-height: 1.6;
+  color: hsl(204 12% 45%);
+
+  br {
+    display: none;
+
+    @media (min-width: 810px) {
+      display: block;
+    }
+  }
+
+  :global(.dark) & {
+    color: rgba(156, 163, 175, var(--tw-text-opacity));
+  }
+}
+
+.actions {
+  margin-top: 1.6em;
+  margin-bottom: 1.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-size: min(1.3rem, max(3.5vw, 1.1rem));
+  font-weight: 500;
+}
+
+.button {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  font-size: 1.1rem;
+  font-family: 'Silkscreen', sans-serif;
+  border-radius: 4px;
+  background-color: #f3f4f6;
+
+  &:hover  {
+    background-image: linear-gradient(146deg, #000, #444);
+    color: #fff;
+
+    span {
+      transform: translateX(11px) translateY(1px);
+    }
+  }
+
+  span {
+    transform: translateX(6px) translateY(1px);
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+
+  :global(.dark) & {
+    color: #fff;
+    background-color: #161E35;
+
+    &:hover {
+      background-image: linear-gradient(80deg, #EE0979, #FF6A00);
+    }
+  }
+}
+

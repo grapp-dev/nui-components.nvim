@@ -1,0 +1,52 @@
+import { Property } from '../../../components/Property'
+
+## Box
+
+`Box` is a component that allows you to arrange children either horizontally or vertically.
+
+```
+      direction = "row"  ──────────────────────────────────────▶
+
+    ┌────────────────────────────┐ ┌────────────────────────────┐
+ │  │                            │ │                            │
+ │  │    direction = "column"    │ │                            │
+ │  │                            │ │                            │
+ │  └────────────────────────────┘ │                            │
+ │  ┌────────────────────────────┐ │                            │
+ │  │                            │ │                            │
+ │  │                            │ │                            │
+ ▼  │                            │ │                            │
+    └────────────────────────────┘ └────────────────────────────┘
+```
+
+### Usage Example
+
+```lua
+n.box(<children>) -- flex = 1
+n.box(2, <children>) -- flex = 2
+n.box({ flex = 3, direction = "column" }, <children>)
+n.box({ flex = 0 }, <children>)
+n.box({ size = 10 }, <children>)
+```
+
+### Properties
+
+#### size
+
+<Property 
+  types={['number']}
+/>
+
+#### flex
+
+<Property 
+  types={['number']}
+/>
+
+#### direction
+
+<Property 
+  defaultValue="row"
+  types={["'row' | 'column'"]}
+/>
+
