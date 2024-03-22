@@ -10,16 +10,7 @@ local fn = require("nui-components.utils.fn")
 local Component = Popup:extend("Component")
 
 function Component:init(props, popup_options)
-  popup_options = fn.deep_merge({
-    enter = false,
-    focusable = true,
-    win_options = {
-      winblend = 0,
-    },
-    zindex = 100,
-  }, fn.default_to(popup_options, {}))
-
-  props = fn.merge({
+  props = fn.deep_merge({
     hidden = false,
     mappings = fn.always({}),
     events = fn.always({}),
@@ -30,7 +21,33 @@ function Component:init(props, popup_options)
     on_mount = fn.ignore,
     on_unmount = fn.ignore,
     id = tostring(math.random()),
+    window = {
+      blend = 0,
+      highlight = nil,
+    },
   }, props)
+
+  local winhighlight = props.window.highlight
+
+  if winhighlight and type(winhighlight) == "table" then
+    winhighlight = table.concat(
+      fn.kreduce(winhighlight, function(acc, value, key)
+        table.insert(acc, key .. ":" .. value)
+        return acc
+      end, {}),
+      ","
+    )
+  end
+
+  popup_options = fn.deep_merge({
+    enter = false,
+    focusable = true,
+    win_options = {
+      winblend = props.window.blend,
+      winhighlight = winhighlight,
+    },
+    zindex = 100,
+  }, popup_options)
 
   if props.border_label and not props.border_style then
     props.border_style = "rounded"
@@ -161,6 +178,7 @@ function Component:_default_prop_types()
     padding = { "table", "number", "nil" },
     autofocus = { "boolean", "nil" },
     validate = { "function", "nil" },
+    window = "table",
   }
 end
 

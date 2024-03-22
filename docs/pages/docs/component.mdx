@@ -586,6 +586,38 @@ Where `Padding` is:
 ```
 </Property>
 
+#### window
+
+> Allows you to modify the appearance and behavior of the floating window.
+
+<Property 
+  types={['WindowOptions']}
+>
+Where `WindowOptions` is:
+
+```lua
+{
+  blend = number,
+  highlight = table | string
+}
+```
+
+Examples:
+```lua
+window = {
+  highlight = {
+    FloatBorder = "Normal",
+    NormalFloat = "String",
+  }
+}
+
+window = {
+  highlight = "FloatBorder:Normal,NormalFloat:String"
+}
+```
+
+</Property>
+
 #### global_focus_key
 
 > Specifies a global key used to focus on the component.
