@@ -455,17 +455,19 @@ local signal = n.create_signal({
   value = 1,
 })
 
-local body = counter({
-  border_label = {
-    text = "Counter",
-    align = "center",
-  },
-  autofocus = true,
-  value = signal.value,
-  on_change = function(value)
-    signal.value = value
-  end,
-})
+local body = function()
+  return counter({
+    border_label = {
+      text = "Counter",
+      align = "center",
+    },
+    autofocus = true,
+    value = signal.value,
+    on_change = function(value)
+      signal.value = value
+    end,
+  })
+end
 
 renderer:render(body)
 ```

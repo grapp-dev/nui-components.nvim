@@ -23,7 +23,9 @@ local signal = n.create_signal({
   text = "",
 })
 
-local body = n.rows()
+local body = function()
+  return n.rows()
+end
 
 renderer:render(body)
 ```
@@ -31,7 +33,7 @@ renderer:render(body)
 Now, let's use `n.checkbox` to create a row with a checkbox component. This checkbox will allow us to display a text input component. The checkbox has the following properties: `autofocus` (set to true), `label`, `value` (bound to the `is_checked` property of the signal). When you press the checkbox  (using `<CR>` or `<Space>`), we update the `is_checked` property of the signal.
 
 
-```lua showLineNumbers {14-21}
+```lua showLineNumbers {13-24}
 local n = require("nui-components")
 
 local renderer = n.create_renderer({
@@ -44,23 +46,25 @@ local signal = n.create_signal({
   text = "",
 })
 
-local body = n.rows(
-  n.checkbox({
-    autofocus = true,
-    label = "Display text_input component",
-    value = signal.is_checked,
-    on_change = function(is_checked)
-      signal.is_checked = is_checked
-    end,
-  })
-)
+local body = function()
+  return n.rows(
+    n.checkbox({
+      autofocus = true,
+      label = "Display text_input component",
+      value = signal.is_checked,
+      on_change = function(is_checked)
+        signal.is_checked = is_checked
+      end,
+    })
+  )
+end
 
 renderer:render(body)
 ```
 
 Let's create another row. This time, we'll have two nested rows. Both rows will be hidden when the `is_checked` property of the signal is `false`. The first row contains a text input component with the following properties: `flex` (set to 1), `value` (bound to the `text` property of the signal). When the user types something, we update the `text` property of the signal.
 
-```lua showLineNumbers {22-33}
+```lua showLineNumbers {23-35}
 local n = require("nui-components")
 
 local renderer = n.create_renderer({
@@ -73,29 +77,31 @@ local signal = n.create_signal({
   text = "",
 })
 
-local body = n.rows(
-  n.checkbox({
-    autofocus = true,
-    label = "Display text_input component",
-    value = signal.is_checked,
-    on_change = function(is_checked)
-      signal.is_checked = is_checked
-    end,
-  }),
-  n.rows(
-    {
-      flex = 1,
-      hidden = signal.is_checked:negate(),
-    },
-    n.text_input({
-      flex = 1,
-      value = signal.text,
-      on_change = function(value)
-        signal.text = value
+local body = function()
+  return n.rows(
+    n.checkbox({
+      autofocus = true,
+      label = "Display text_input component",
+      value = signal.is_checked,
+      on_change = function(is_checked)
+        signal.is_checked = is_checked
       end,
-    })
+    }),
+    n.rows(
+      {
+        flex = 1,
+        hidden = signal.is_checked:negate(),
+      },
+      n.text_input({
+        flex = 1,
+        value = signal.text,
+        on_change = function(value)
+          signal.text = value
+        end,
+      })
+    )
   )
-)
+end
 
 renderer:render(body)
 ```
@@ -103,7 +109,7 @@ renderer:render(body)
 Next, let's use `n.columns` to create the second row with two columns. The first column fills all available horizontal space. The second column contains a button component. When you press the button, we clear the text input.
 
 
-```lua showLineNumbers {34-42}
+```lua showLineNumbers {35-44}
 local n = require("nui-components")
 
 local renderer = n.create_renderer({
@@ -116,39 +122,41 @@ local signal = n.create_signal({
   text = "",
 })
 
-local body = n.rows(
-  n.checkbox({
-    autofocus = true,
-    label = "Display text_input component",
-    value = signal.is_checked,
-    on_change = function(is_checked)
-      signal.is_checked = is_checked
-    end,
-  }),
-  n.rows(
-    {
-      flex = 1,
-      hidden = signal.is_checked:negate(),
-    },
-    n.text_input({
-      flex = 1,
-      value = signal.text,
-      on_change = function(value)
-        signal.text = value
+local body = function()
+  return n.rows(
+    n.checkbox({
+      autofocus = true,
+      label = "Display text_input component",
+      value = signal.is_checked,
+      on_change = function(is_checked)
+        signal.is_checked = is_checked
       end,
     }),
-    n.columns(
-      { flex = 0 },
-      n.gap({ flex = 1 }),
-      n.button({
-        label = "Clear",
-        on_press = function()
-          signal.text = ""
+    n.rows(
+      {
+        flex = 1,
+        hidden = signal.is_checked:negate(),
+      },
+      n.text_input({
+        flex = 1,
+        value = signal.text,
+        on_change = function(value)
+          signal.text = value
         end,
-      })
+      }),
+      n.columns(
+        { flex = 0 },
+        n.gap({ flex = 1 }),
+        n.button({
+          label = "Clear",
+          on_press = function()
+            signal.text = ""
+          end,
+        })
+      )
     )
   )
-)
+end
 
 renderer:render(body)
 ```

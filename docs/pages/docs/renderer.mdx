@@ -1,3 +1,4 @@
+import { Callout } from 'nextra/components';
 import { Property } from '../../components/Property'
 import { Method } from '../../components/Method'
 
@@ -19,7 +20,9 @@ local subscription = signal:observe(function(previous_state, current_state)
   -- call side effects
 end)
 
-local body = n.rows(…)
+local body = function()
+  return n.rows(…)
+end
 
 renderer:add_mappings({
   {
@@ -80,7 +83,7 @@ For further information, please refer to the documentation of [`nui.nvim`](https
 For further information, please refer to the documentation of [`nui.nvim`](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/layout#relative).
 </Property>
 
-#### `keymap`
+#### keymap
 
 > A table containing a default global key bindings for the renderer.
 
@@ -120,9 +123,46 @@ For further information, please refer to the documentation of [`nui.nvim`](https
 <Method 
   name="render" 
   args={[
-    ['component', 'Component'],
+    ['render_fn', 'fun(): Component'],
   ]}
 />
+
+<Callout type="info">
+  If the `render` method is called in the same function as the root component definition, `Component` can be passed instead of `fun(): Component`.
+</Callout>
+
+Examples:
+
+```lua
+local n = require("nui-components")
+
+local renderer = n.create_renderer({
+  width = 100,
+  height = 24,
+})
+
+local body = function()
+  return n.rows(…)
+end
+
+vim.keymap.set("n", "<leader>i", function()
+  renderer:render(body)
+end, { noremap = true, desc = "" })
+```
+
+```lua
+local n = require("nui-components")
+
+local renderer = n.create_renderer({
+  width = 100,
+  height = 24,
+})
+
+vim.keymap.set("n", "<leader>i", function()
+  local body = n.rows(…)
+  renderer:render(body)
+end, { noremap = true, desc = "" })
+```
 
 #### schedule
 

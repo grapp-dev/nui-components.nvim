@@ -43,6 +43,10 @@ function Renderer.create(options)
 end
 
 function Renderer:render(content)
+  if type(content) == "function" then
+    content = content()
+  end
+
   self:_set_components_tree({ content })
   self:_flatten_components_tree()
   self:_determine_focusable_components()
