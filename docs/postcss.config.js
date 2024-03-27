@@ -1,8 +1,1 @@
-/** @type {import('postcss').Postcss} */
-module.exports = {
-  plugins: {
-    'tailwindcss/nesting': {},
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
+module.exports = require('@grapp/nextra-theme/config/postcss')
