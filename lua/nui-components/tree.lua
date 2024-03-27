@@ -8,20 +8,36 @@ local fn = require("nui-components.utils.fn")
 
 local function focus_item(instance, direction, current_linenr)
   local actions = instance:get_actions()
+  ---@type NuiTree
   local tree = instance:get_tree()
 
   local curr_linenr = current_linenr or vim.api.nvim_win_get_cursor(instance.winid)[1]
   local next_linenr = nil
 
+  local function tree_height(node_id)
+    local height = 1
+    local node = tree:get_node(node_id)
+    if node and node:has_children() and node:is_expanded() then
+      for _, child in ipairs(node:get_child_ids()) do
+        height = height + tree_height(child)
+      end
+    end
+    return height
+  end
+
+  local height = fn.ireduce(tree:get_nodes(), function(acc, node)
+    return acc + tree_height(node._id)
+  end, 0)
+
   if direction == "next" then
-    if curr_linenr == instance:get_max_lines() then
+    if curr_linenr == height then
       next_linenr = 1
     else
       next_linenr = curr_linenr + 1
     end
   elseif direction == "prev" then
     if curr_linenr == 1 then
-      next_linenr = instance:get_max_lines()
+      next_linenr = height
     else
       next_linenr = curr_linenr - 1
     end
@@ -257,16 +273,15 @@ function Tree:on_mount()
   self._private.tree = NuiTree({
     bufnr = self.bufnr,
     ns_id = self.ns_id,
-    nodes = fn.imap(props.data, function(node)
-      if node.id then
-        node._id = node.id
-        return node
-      end
-
-      node._id = tostring(math.random())
-      return node
-    end),
+    nodes = props.data,
     get_node_id = function(node)
+      if node._id == nil then
+        if node.id then
+          node._id = node.id
+        else
+          node._id = tostring(math.random())
+        end
+      end
       return node._id
     end,
     prepare_node = actions.prepare_node,
