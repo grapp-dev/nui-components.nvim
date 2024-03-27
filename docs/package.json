@@ -1,7 +1,8 @@
 {
-  "name": "@grapp-dev/nui-components-docs",
+  "name": "@grapp/nui-components-docs",
   "module": "index.ts",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "dev": "next",
     "build": "next build",
