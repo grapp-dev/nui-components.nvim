@@ -44,10 +44,10 @@ renderer:render(body)
 ### Properties
 
 #### width
-  
-> Refers to the number of characters that can be displayed horizontally by the renderer. 
 
-<Property 
+> Refers to the number of characters that can be displayed horizontally by the renderer.
+
+<Property
   required={true}
   types={['number']}
 />
@@ -56,7 +56,7 @@ renderer:render(body)
 
 > Refers to the number of lines that can be displayed vertically by the renderer.
 
-<Property 
+<Property
   required={true}
   types={['number']}
 />
@@ -65,7 +65,7 @@ renderer:render(body)
 
 > Sets the window position.
 
-<Property 
+<Property
   defaultValue="50%"
   types={['string', 'number', 'table']}
 >
@@ -76,7 +76,7 @@ For further information, please refer to the documentation of [`nui.nvim`](https
 
 > Sets the window layout to "floating" (`NuiComponents` doesn't support split layouts at the moment).
 
-<Property 
+<Property
   defaultValue="editor"
   types={['string', 'table']}
 >
@@ -87,11 +87,15 @@ For further information, please refer to the documentation of [`nui.nvim`](https
 
 > A table containing a default global key bindings for the renderer.
 
-<Property 
+<Property
   defaultValue={{
     close: "<Esc>",
     focus_next: "<Tab>",
     focus_prev: "<S-Tab>"
+    focus_left: nil,
+    focus_right: nil,
+    focus_up: nil,
+    focus_down: nil,
   }}
   types={['table']}
 />
@@ -100,7 +104,7 @@ For further information, please refer to the documentation of [`nui.nvim`](https
 
 > Registers a callback that will be executed when the component tree is mounted for the first time.
 
-<Property 
+<Property
   defaultValue="fn.ignore"
   types={['function']}
 />
@@ -109,7 +113,7 @@ For further information, please refer to the documentation of [`nui.nvim`](https
 
 > Registers a callback function to be executed when the component tree is unmounted (i.e., the window is closed).
 
-<Property 
+<Property
   defaultValue="fn.ignore"
   types={['function']}
 />
@@ -120,8 +124,8 @@ For further information, please refer to the documentation of [`nui.nvim`](https
 
 > Renders the component tree.
 
-<Method 
-  name="render" 
+<Method
+  name="render"
   args={[
     ['render_fn', 'fun(): Component'],
   ]}
@@ -168,8 +172,8 @@ end, { noremap = true, desc = "" })
 
 > Schedules a callback to be executed after the current update cycle has finished.
 
-<Method 
-  name="schedule" 
+<Method
+  name="schedule"
   args={[
     ['schedule_fn', 'fun(): nil'],
   ]}
@@ -197,8 +201,8 @@ end, { noremap = true, desc = "" })
 
 > Adds additional keyboard shortcuts for the component tree.
 
-<Method 
-  name="add_mappings" 
+<Method
+  name="add_mappings"
   args={[
     ['mappings', 'Mapping[]'],
   ]}
@@ -218,8 +222,8 @@ Where `Mapping` is:
 
 > Changes the size of the renderer window.
 
-<Method 
-  name="set_size" 
+<Method
+  name="set_size"
   args={[
     ['size', 'Size'],
   ]}
@@ -237,10 +241,10 @@ Where `Size` is:
 
 #### get_size
 
-> Returns the current size of the renderer window. 
+> Returns the current size of the renderer window.
 
-<Method 
-  name="get_size" 
+<Method
+  name="get_size"
   returns="Size"
 />
 
@@ -248,20 +252,34 @@ Where `Size` is:
 
 > Searches the component tree for a component with the specified `id` and returns it if found.
 
-<Method 
-  name="get_component_by_id" 
+<Method
+  name="get_component_by_id"
   args={[
     ['id', 'string'],
   ]}
   returns="Component | nil"
 />
 
+#### get_component_by_direction
+
+> Searches the component tree for a focusable component in the specified direction, starting
+> from the focused component, or the specified `from` component if provided.
+
+<Method
+  name="get_component_by_direction"
+  args={[
+    ['direction', '"left" | "right" | "up" | "down"'],
+    ['from', 'Component | nil']
+  ]}
+  returns="Component | nil"
+/>
+
 #### get_origin_winid
 
-> Returns the original window `id` when the component tree was first rendered. 
+> Returns the original window `id` when the component tree was first rendered.
 
-<Method 
-  name="get_origin_winid" 
+<Method
+  name="get_origin_winid"
   returns="number"
 />
 
@@ -269,8 +287,8 @@ Where `Size` is:
 
 > Returns the last focused component within the component tree.
 
-<Method 
-  name="get_last_focused_component" 
+<Method
+  name="get_last_focused_component"
   returns="Component"
 />
 
@@ -278,8 +296,8 @@ Where `Size` is:
 
 > Returns a list of all focusable components within the tree.
 
-<Method 
-  name="get_focusable_components" 
+<Method
+  name="get_focusable_components"
   returns="Component[]"
 />
 
@@ -287,8 +305,8 @@ Where `Size` is:
 
 > Returns the entire internal tree used by the component
 
-<Method 
-  name="get_component_tree" 
+<Method
+  name="get_component_tree"
   returns="Component[]"
 />
 
@@ -296,8 +314,8 @@ Where `Size` is:
 
 > Registers a callback function to be executed when the component tree is first mounted.
 
-<Method 
-  name="on_mount" 
+<Method
+  name="on_mount"
   args={[
     ['mount_fn', 'fun(): nil'],
   ]}
@@ -307,8 +325,8 @@ Where `Size` is:
 
 > Registers a function to be called when the component tree is unmounted.
 
-<Method 
-  name="on_unmount" 
+<Method
+  name="on_unmount"
   args={[
     ['unmount_fn', 'fun(): nil'],
   ]}
