@@ -40,4 +40,42 @@ function M.compose(...)
   end
 end
 
+function M.none(...)
+  local validators = { ... }
+  return function(value)
+    for _, fn in ipairs(validators) do
+      if fn(value) then
+        return false
+      end
+    end
+    return true
+  end
+end
+
+function M.any(...)
+  local validators = { ... }
+  return function(value)
+    for _, fn in ipairs(validators) do
+      if fn(value) then
+        return true
+      end
+    end
+    return false
+  end
+end
+
+function M.all(...)
+  local validators = { ... }
+
+  return function(value)
+    for _, fn in ipairs(validators) do
+      if not fn(value) then
+        return false
+      end
+    end
+
+    return true
+  end
+end
+
 return M
