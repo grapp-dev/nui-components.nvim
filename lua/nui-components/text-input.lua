@@ -57,7 +57,8 @@ function TextInput:prop_types()
   }
 end
 
-function TextInput:_update_placeholder(show)
+function TextInput:_update_placeholder()
+  local show = self:get_current_value() == ""
   local props = self:get_props()
   local placeholder = props.placeholder
   if show and placeholder and placeholder ~= "" then
@@ -96,7 +97,7 @@ function TextInput:_attach_change_listener()
       self:set_current_value(value)
       props.on_change(value, self)
 
-      self:_update_placeholder(self:get_current_value() == "")
+      self:_update_placeholder()
 
       if props.autoresize then
         self._private.text_input_signal.size = math.max(#lines, self._private.text_input_initial_size)
@@ -216,7 +217,7 @@ end
 
 function TextInput:on_mount()
   self:_attach_change_listener()
-  self:_update_placeholder(self:get_current_value() == "")
+  self:_update_placeholder()
 end
 
 return TextInput

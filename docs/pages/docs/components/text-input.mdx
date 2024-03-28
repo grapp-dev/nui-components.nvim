@@ -3,14 +3,14 @@ import { Property } from '../../../components/Property'
 
 ## TextInput
 
-`TextInput` is a component that allows you to enter any text. 
+`TextInput` is a component that allows you to enter any text.
 
 ![](/gifs/text-input-1.gif)
 
 ### Usage Example
 
 ```lua
-local signal = n.create_signal({ 
+local signal = n.create_signal({
   value = "hello world",
 })
 
@@ -20,6 +20,7 @@ n.text_input({
   size = 1,
   value = signal.value,
   border_label = "Description",
+  placeholder = "Enter a description",
   max_lines = 5,
   on_change = function(value, component)
     signal.value = value
@@ -38,7 +39,7 @@ n.text_input({
 
 ### Properties
 
-#### autoresize 
+#### autoresize
 
 <Property
   defaultValue="false"
@@ -47,20 +48,40 @@ n.text_input({
 
 #### max_lines
 
-<Property 
+<Property
   types={['number']}
 />
 
 #### value
 
-<Property 
+<Property
   defaultValue='""'
   types={['string']}
 />
 
+#### placeholder
+
+> Optional placeholder text to show when the input is empty.
+> Can be a string, a single virtual text chunk, or a list of virtual text chunks.
+
+<Property
+  defaultValue='nil'
+  types={['string', '{ [1]: string, [2]: string }[]', 'nil']}
+/>
+
+A virtual text chunk is a tuple-like table where the first element
+is the text and the second element is the highlight group.
+
+```lua
+local placeholder = {
+  { "Hello", "Comment" },
+  { "World", "String" },
+}
+```
+
 #### on_change
 
-<Property 
+<Property
   types={['fun(value: string, component: TextInput): nil']}
 />
 

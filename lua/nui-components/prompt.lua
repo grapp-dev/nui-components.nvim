@@ -46,7 +46,7 @@ function Prompt:_attach_change_listener()
       self:set_current_value(value)
       props.on_change(value, self)
 
-      self:_update_placeholder(self:get_current_value() == "")
+      self:_update_placeholder()
 
       if prefix_length > 0 then
         vim.schedule(function()
