@@ -38,14 +38,14 @@ n.form(
 
 #### on_submit
 
-<Property 
+<Property
   defaultValue="fn.ignore"
   types={['fun(is_valid: boolean): nil']}
 />
 
 #### submit_key
 
-<Property 
+<Property
   defaultValue="<C-CR>"
   types={['string[]', 'string']}
 />
@@ -62,5 +62,12 @@ Available validation functions:
 - `max_length`
 - `equals`
 - `contains`
+
+Available combinators:
+
+- `all`: ensures all validators pass
+- `any`: ensures at least one validator passes
+- `none`: ensures no validators pass
+- `compose` (deprecated, use `all`)
 
 
