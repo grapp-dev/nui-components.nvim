@@ -2,6 +2,7 @@ local Layout = require("nui.layout")
 local Subject = require("nui-components.rx.subject")
 
 local fn = require("nui-components.utils.fn")
+local geometry = require("nui-components.utils.geometry")
 
 local Renderer = {}
 
@@ -188,6 +189,45 @@ function Renderer:get_focusable_components()
   return self._private.focusable_components
 end
 
+---Get the component in the specified direction from the given component or the currently
+---focused one.
+---@param dir "left" | "right" | "up" | "down" Direction to query
+---@param from table | nil Component to query from, or nil for the focused component
+function Renderer:get_component_by_direction(dir, from)
+  local focused = from or self:get_last_focused_component()
+  local focused_geo = geometry.win_get_geometry(focused.winid)
+
+  local focusable = vim
+    .iter(self:get_focusable_components())
+    :filter(function(component)
+      return component ~= focused
+    end)
+    :map(function(component)
+      return {
+        component = component,
+        geometry = geometry.win_get_geometry(component.winid),
+      }
+    end)
+    :filter(function(component)
+      return geometry.match_direction(dir, focused_geo, component.geometry)
+    end)
+    :totable()
+
+  if #focusable > 1 then
+    table.sort(focusable, function(a, b)
+      if dir == "left" or dir == "right" then
+        return geometry.distance_x(a.geometry, focused_geo) < geometry.distance_x(b.geometry, focused_geo)
+      else
+        return geometry.distance_y(a.geometry, focused_geo) < geometry.distance_y(b.geometry, focused_geo)
+      end
+    end)
+  end
+
+  if focusable[1] then
+    return focusable[1].component
+  end
+end
+
 function Renderer:get_mappings(component)
   local default_mappings = {
     {
@@ -197,9 +237,11 @@ function Renderer:get_mappings(component)
         self:close()
       end,
     },
-    {
+  }
+
+  local focus_mappings = {
+    focus_next = {
       mode = { "i", "n" },
-      key = self._private.keymap.focus_next,
       handler = function()
         local focusable_components = self:get_focusable_components()
         local index = component:get_focus_index()
@@ -208,9 +250,8 @@ function Renderer:get_mappings(component)
         vim.api.nvim_set_current_win(next.winid)
       end,
     },
-    {
+    focus_prev = {
       mode = { "i", "n" },
-      key = self._private.keymap.focus_prev,
       handler = function()
         local focusable_components = self:get_focusable_components()
         local index = component:get_focus_index()
@@ -219,7 +260,50 @@ function Renderer:get_mappings(component)
         vim.api.nvim_set_current_win(prev.winid)
       end,
     },
+    focus_right = {
+      mode = { "i", "n" },
+      handler = function()
+        local c = self:get_component_by_direction("right")
+        if c then
+          c:focus()
+        end
+      end,
+    },
+    focus_left = {
+      mode = { "i", "n" },
+      handler = function()
+        local c = self:get_component_by_direction("left")
+        if c then
+          c:focus()
+        end
+      end,
+    },
+    focus_down = {
+      mode = { "i", "n" },
+      handler = function()
+        local c = self:get_component_by_direction("down")
+        if c then
+          c:focus()
+        end
+      end,
+    },
+    focus_up = {
+      mode = { "i", "n" },
+      handler = function()
+        local c = self:get_component_by_direction("up")
+        if c then
+          c:focus()
+        end
+      end,
+    },
   }
+
+  for key, mapping in pairs(focus_mappings) do
+    if self._private.keymap[key] then
+      mapping.key = self._private.keymap[key]
+      table.insert(default_mappings, mapping)
+    end
+  end
 
   return fn.concat(default_mappings, self._private.mappings)
 end
