@@ -37,13 +37,14 @@ function Paragraph:prop_types()
 end
 
 function Paragraph:_calculate_gap_width(max_width, text_width)
-  local align = self:get_props().align
+  local props = self:get_props()
+  local align, truncate = props.align, props.truncate
 
   local gap_width = max_width - text_width
-  if align == "left" then
+  if align == "left" and not truncate then
     return 0, gap_width
   elseif align == "center" then
-    return math.floor(gap_width / 2), math.ceil(gap_width / 2)
+    return math.floor(gap_width / 2), truncate and 0 or math.ceil(gap_width / 2)
   elseif align == "right" then
     return gap_width, 0
   end
