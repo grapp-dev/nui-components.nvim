@@ -32,7 +32,7 @@ export default getDefaultConfig({
           ],
         },
         {
-          title: 'Guide',
+          title: 'Guides',
           links: [
             {
               title: 'Your first UI implementation',
