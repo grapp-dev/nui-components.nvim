@@ -28,6 +28,5 @@ jobs:
           server: ${{ secrets.GRAPP_FTP_SERVER_URL }}
           username: ${{ secrets.GRAPP_FTP_USERNAME }} 
           password: ${{ secrets.GRAPP_FTP_PASSWORD }}
-          dangerous-clean-slate: true
           local-dir: './docs/out/'
           server-dir: 'nui-components/'
