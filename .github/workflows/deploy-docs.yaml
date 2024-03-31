@@ -30,4 +30,4 @@ jobs:
           password: ${{ secrets.GRAPP_FTP_PASSWORD }}
           dangerous-clean-slate: true
           local-dir: './docs/out/'
-          server-dir: 'public_html/nui-components/'
+          server-dir: 'nui-components/'
