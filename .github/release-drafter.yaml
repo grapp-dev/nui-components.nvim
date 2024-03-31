@@ -3,7 +3,7 @@ tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: 🛠 Breaking Changes
     labels:
-      - breaking-change
+      - 'breaking change'
   - title: 🚀 Features
     labels:
       - feature
