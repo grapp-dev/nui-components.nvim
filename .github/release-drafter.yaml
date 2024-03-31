@@ -42,4 +42,9 @@ autolabeler:
       - '/fix/i'
   - label: 'feature'
     branch:
-      - '/feat\/.+/'
+      - '/(feat|feature)\/.+/'
+    title:
+      - '/feat/i'
+  - label: 'chore'
+    title:
+      - '/(chore|docs)/i'

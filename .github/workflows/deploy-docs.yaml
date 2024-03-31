@@ -24,14 +24,12 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-
-      - name: Build
-        run: |
+      - run: |
           cd docs
           bun install --frozen-lockfile
           bun run build
           cd ..
-      - name: Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.GRAPP_FTP_SERVER_URL }}
           username: ${{ secrets.GRAPP_FTP_USERNAME }} 
