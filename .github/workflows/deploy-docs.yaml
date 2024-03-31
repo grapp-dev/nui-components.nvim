@@ -1,0 +1,30 @@
+name: Build & Deploy docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - name: Build
+        run: |
+          cd docs
+          bun install -f
+          bun run build
+          cd ..
+      - name: Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.GRAPP_FTP_SERVER_URL }}
+          username: ${{ secrets.GRAPP_FTP_USERNAME }} 
+          password: ${{ secrets.GRAPP_FTP_PASSWORD }}
+          dangerous-clean-slate: true
+          local-dir: './docs/out/'
+          server-dir: 'public_html/nui-components/'
