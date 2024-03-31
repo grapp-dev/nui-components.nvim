@@ -2,7 +2,7 @@
 
 ## v1.1.0 - 2024-03-31
 
-### What's Changed
+## What's Changed
 
 ### 🚀 Features
 
@@ -13,5 +13,3 @@
 
 - fix: remove right padding from paragraph and descendants @willothy (#11)
 - Tree fixes for nested node handling (scroll and id generation) @willothy (#6)
-
-@mobily and @willothy
