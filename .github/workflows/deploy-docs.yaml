@@ -1,9 +1,8 @@
 name: Build & Deploy docs
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [released]
 
 jobs:
   deploy:
