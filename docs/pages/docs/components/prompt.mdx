@@ -11,6 +11,7 @@ import { Property } from '../../../components/Property'
 ```lua
 n.prompt({
   prefix = " > ",
+  placeholder = "Enter a command",
   border_label = {
     text = "Command",
     align = "center",
@@ -25,31 +26,51 @@ n.prompt({
 
 #### value
 
-<Property 
+<Property
   types={["string"]}
 />
 
 #### prefix
 
-<Property 
+<Property
   types={["string"]}
 />
 
+#### placeholder
+
+> Optional placeholder text to show when the input is empty.
+> Can be a string, a single virtual text chunk, or a list of virtual text chunks.
+
+<Property
+  defaultValue='nil'
+  types={['string', '{ [1]: string, [2]: string }[]', 'nil']}
+/>
+
+A virtual text chunk is a tuple-like table where the first element
+is the text and the second element is the highlight group.
+
+```lua
+local placeholder = {
+  { "Hello", "Comment" },
+  { "World", "String" },
+}
+```
+
 #### on_change
 
-<Property 
+<Property
   types={['fun(value: string, component: Prompt): nil']}
 />
 
 #### on_submit
 
-<Property 
+<Property
   types={['fun(value: string, component: Prompt): nil']}
 />
 
 #### submit_key
 
-<Property 
+<Property
   defaultValue="<CR>"
   types={["string[]", "string"]}
 />

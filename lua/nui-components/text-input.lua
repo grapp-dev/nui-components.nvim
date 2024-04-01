@@ -11,6 +11,7 @@ function TextInput:init(props, popup_options)
     autoresize = false,
     max_lines = nil,
     value = "",
+    placeholder = "",
     on_change = fn.ignore,
     border_style = "rounded",
   }, props)
@@ -52,7 +53,37 @@ function TextInput:prop_types()
     autoresize = { "boolean", "nil" },
     wrap = { "boolean", "nil" },
     filetype = { "string", "nil" },
+    placeholder = { "string", "table", "nil" },
   }
+end
+
+function TextInput:_update_placeholder()
+  local show = self:get_current_value() == ""
+  local props = self:get_props()
+  local placeholder = props.placeholder
+  if show and placeholder and placeholder ~= "" then
+    local virt_text
+    if type(placeholder) == "table" then
+      if type(placeholder[1]) == "table" then
+        -- multiple virt-text chunks
+        virt_text = placeholder
+      else
+        -- single virt-text chunk
+        virt_text = { placeholder }
+      end
+    else
+      -- string
+      virt_text = { { placeholder, "Comment" } }
+    end
+    self._private.placeholder_extmark = vim.api.nvim_buf_set_extmark(self.bufnr, self.ns_id, 0, 0, {
+      virt_text = virt_text,
+      virt_text_pos = "inline",
+      id = self._private.placeholder_extmark,
+    })
+  elseif self._private.placeholder_extmark then
+    vim.api.nvim_buf_del_extmark(self.bufnr, self.ns_id, self._private.placeholder_extmark)
+    self._private.placeholder_extmark = nil
+  end
 end
 
 function TextInput:_attach_change_listener()
@@ -65,6 +96,8 @@ function TextInput:_attach_change_listener()
 
       self:set_current_value(value)
       props.on_change(value, self)
+
+      self:_update_placeholder()
 
       if props.autoresize then
         self._private.text_input_signal.size = math.max(#lines, self._private.text_input_initial_size)
@@ -184,6 +217,7 @@ end
 
 function TextInput:on_mount()
   self:_attach_change_listener()
+  self:_update_placeholder()
 end
 
 return TextInput
