@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.2.0 - 2024-04-01
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: extmark-based placeholder for text inputs @willothy (#7)
+- Feat validator combinators @willothy (#12)
+
+#### 🚩 Other Changes
+
+- chore: Add `deploy-docs` workflow @mobily (#14)
+
 ## v1.1.0 - 2024-03-31
 
 ### What's Changed
