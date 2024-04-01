@@ -4,6 +4,9 @@ local Line = require("nui.line")
 
 local fn = require("nui-components.utils.fn")
 
+---@class NuiComponents.Paragraph: NuiComponents.Component
+---@overload fun(_, props: table<string, any>, popup_options: NuiPopupOptions): NuiComponents.Paragraph
+---@field super NuiComponents.Component
 local Paragraph = Component:extend("Paragraph")
 
 local function get_max_width(lines)

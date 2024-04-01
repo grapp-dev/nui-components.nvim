@@ -3,6 +3,9 @@ local Paragraph = require("nui-components.paragraph")
 
 local fn = require("nui-components.utils.fn")
 
+---@class NuiComponents.Checkbox: NuiComponents.Paragraph
+---@overload fun(_, props: table<string, any>, popup_options: NuiPopupOptions): NuiComponents.Checkbox
+---@field super NuiComponents.Paragraph
 local Checkbox = Paragraph:extend("Checkbox")
 
 function Checkbox:init(props, popup_options)

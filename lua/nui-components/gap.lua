@@ -2,6 +2,9 @@ local Component = require("nui-components.component")
 local Layout = require("nui.layout")
 local fn = require("nui-components.utils.fn")
 
+---@class NuiComponents.Gap: NuiComponents.Component
+---@overload fun(_, props: table<string, any>, popup_options: NuiPopupOptions): NuiComponents.Gap
+---@field super NuiComponents.Component
 local Gap = Component:extend("Gap")
 
 function Gap:init(props, popup_options)

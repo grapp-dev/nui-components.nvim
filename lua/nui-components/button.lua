@@ -3,6 +3,9 @@ local Paragraph = require("nui-components.paragraph")
 local event = require("nui.utils.autocmd").event
 local fn = require("nui-components.utils.fn")
 
+---@class NuiComponents.Button: NuiComponents.Paragraph
+---@overload fun(_, props: table<string, any>, popup_options: NuiPopupOptions): NuiComponents.Button
+---@field super NuiComponents.Paragraph
 local Button = Paragraph:extend("Button")
 
 function Button:init(props, popup_options)
