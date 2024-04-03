@@ -1,23 +1,8 @@
 {
-  "extends": "@grapp/ts-config/default.json",
-  "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "noEmit": true,
-    "incremental": true,
-    "resolveJsonModule": true,
-    "jsx": "preserve"
-  },
+  "extends": "@grapp/nextra-theme/default.json",
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
+    "./docs/**/*.ts",
+    "./docs/**/*.tsx"
   ]
 }

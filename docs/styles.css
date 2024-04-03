@@ -1,1 +1,2 @@
-@import "@grapp/nextra-theme/styles/main.css";
+@import "@grapp/nextra-theme/lib/global.css";
+@import "@grapp/nextra-theme/lib/index.css";
