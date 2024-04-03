@@ -1,5 +1,5 @@
 const nextra = require('nextra')
-const { nextraOptions, withNextraOptions } = require('@grapp/nextra-theme/config/nextra')
+const { getNextraOptions, getWithNextraOptions } = require('@grapp/nextra-theme/config/nextra')
 
-const withNextra = nextra(nextraOptions)
-module.exports = withNextra(withNextraOptions)
+const withNextra = nextra(getNextraOptions())
+module.exports = withNextra(getWithNextraOptions())
