@@ -14,6 +14,11 @@
     "title": "More"
   },
   "showcase": "",
+  "sponsor_link": {
+    "title": "Sponsor ↗",
+    "href": "https://github.com/sponsors/mobily",
+    "newWindow": true
+  },
   "github_link": {
     "title": "GitHub ↗",
     "href": "https://github.com/grapp-dev/nui-components.nvim",

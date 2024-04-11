@@ -11,12 +11,11 @@ export default getDefaultConfig({
   discord: 'https://discord.gg/Rj2V3keVS4',
   docs: 'https://nui-components.grapp.dev',
   logo: () => {
-    return <Logo image={NuiComponentsLogo} title="Nui.Components" />;
+    return <Logo image={NuiComponentsLogo} title="nui-components.nvim" />;
   },
   footer: () => {
     return (
       <Footer
-        github="https://github.com/grapp-dev/nui-components.nvim"
         sections={[
           {
             title: 'FAQ',

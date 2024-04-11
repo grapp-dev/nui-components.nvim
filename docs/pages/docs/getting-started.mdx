@@ -1,9 +1,11 @@
+import { Tabs } from 'nextra/components'
+
 ## Installation
 
 To install NuiComponents, you should use your preferred plugin manager.
 
-[Lazy](https://github.com/folke/lazy.nvim)
-
+<Tabs items={['Lazy', 'Packer']}>
+<Tabs.Tab>
 ```lua
 {
   "grapp-dev/nui-components.nvim",
@@ -12,9 +14,8 @@ To install NuiComponents, you should use your preferred plugin manager.
   }
 }
 ```
-
-[Packer](https://github.com/wbthomason/packer.nvim)
-
+</Tabs.Tab>
+<Tabs.Tab>
 ```lua
 use {
   "grapp-dev/nui-components.nvim",
@@ -23,6 +24,8 @@ use {
   }
 }
 ```
+</Tabs.Tab>
+</Tabs>
 
 ## Your first UI implementation
 

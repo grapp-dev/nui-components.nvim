@@ -17,11 +17,5 @@
     "theme": {
       "typesetting": "article"
     }
-  },
-  "sponsor_link": {
-    "type": "page",
-    "title": "Sponsor ↗",
-    "href": "https://github.com/sponsors/mobily",
-    "newWindow": true
   }
 }
