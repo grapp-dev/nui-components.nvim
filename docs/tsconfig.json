@@ -2,8 +2,8 @@
   "extends": "@grapp/nextra-theme/tsconfig.json",
   "include": [
     "next-env.d.ts",
-    "./docs/**/*.ts",
-    "./docs/**/*.tsx"
+    "./**/*.ts",
+    "./**/*.tsx"
   ],
   "compilerOptions": {
     "incremental": true
