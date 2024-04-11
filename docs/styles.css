@@ -1,2 +1,7 @@
 @import "@grapp/nextra-theme/lib/global.css";
 @import "@grapp/nextra-theme/lib/index.css";
+
+:root {
+  --grapp-home-preview-max-width: 900px;
+}
+
