@@ -11,7 +11,7 @@ function SignalValue.create(subject, key)
       key = key,
       subject = subject,
       observable = subject:map(function(value)
-        return value[key]
+        return key ~= nil and value[key] or value
       end),
     },
   }
@@ -20,7 +20,8 @@ function SignalValue.create(subject, key)
 end
 
 function SignalValue:get_value()
-  return self._private.subject:get_value()[self._private.key]
+  local val = self._private.subject:get_value()
+  return self._private.key ~= nil and val[self._private.key] or val
 end
 
 function SignalValue:get_observer_value()

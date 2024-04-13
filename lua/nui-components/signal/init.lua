@@ -30,6 +30,12 @@ function Signal.create(object)
         end
       end
 
+      if key == "map" then
+        return function(_, ...)
+          return self:map(...)
+        end
+      end
+
       if key == "get_value" then
         return function(_)
           return self:get_value()
@@ -70,6 +76,10 @@ end
 
 function Signal:get_value()
   return self._private.subject:get_value()
+end
+
+function Signal:map(map_fn)
+  return SignalValue.create(self._private.subject):map(map_fn)
 end
 
 return Signal

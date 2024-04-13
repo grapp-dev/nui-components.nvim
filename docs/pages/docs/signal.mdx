@@ -186,6 +186,69 @@ And here's the final result:
 
 <Method name="get_value" returns="table" />
 
+#### map
+
+> Applies a mapping function to each value emitted by the `Signal`. The mapping function receives the current value of the `Signal` object.
+
+<Method
+  name="map"
+  args={[
+    ['map_fn', 'fun(value: T): R'],
+  ]}
+  returns="SignalValue"
+/>
+
+Example:
+
+```lua
+local n = require 'nui-components'
+
+local renderer = n.create_renderer {
+  width = 60,
+  height = 12,
+}
+
+local signal = n.create_signal {
+  name = '',
+  description = '',
+}
+
+local body = function()
+  return n.rows(
+    n.paragraph {
+      is_focusable = false,
+      lines = signal:map(function(val)
+        return {
+          n.line(n.text('Name: ', 'Keyword'), val.name),
+          n.line(n.text('Description: ', 'Keyword'), val.description),
+        }
+      end),
+    },
+    n.gap(1),
+    n.form(
+      { id = 'form' },
+      n.text_input {
+        autofocus = true,
+        max_lines = 1,
+        border_label = 'Name',
+        on_change = function(val)
+          signal.name = val
+        end,
+      },
+      n.text_input {
+        max_lines = 1,
+        border_label = 'Description',
+        on_change = function(val)
+          signal.description = val
+        end,
+      }
+    )
+  )
+end
+
+renderer:render(body)
+```
+
 ### Methods / Operators (Signal Value)
 
 #### get_value
