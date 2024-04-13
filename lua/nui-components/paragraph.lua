@@ -145,12 +145,13 @@ function Paragraph:on_update()
     local lines = self:get_lines()
     local size = self:get_size()
     local props = self:get_props()
+    local border_delta_size = self:get_border_delta_size()
 
     if not self:is_hidden() then
       self._private.last_width = size.width
     end
 
-    local width = self._private.last_width or size.width
+    local width = (self._private.last_width or size.width) - border_delta_size.width
 
     fn.ieach(lines, function(line, index)
       local new_line = Line()
