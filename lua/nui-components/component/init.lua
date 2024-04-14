@@ -395,12 +395,10 @@ function Component:initial_value()
 end
 
 function Component:modify_buffer_content(modify_fn)
-  self:set_buffer_option("modifiable", true)
   vim.schedule(function()
+    self:set_buffer_option("modifiable", true)
     modify_fn()
-    vim.schedule(function()
-      self:set_buffer_option("modifiable", false)
-    end)
+    self:set_buffer_option("modifiable", false)
   end)
 end
 
