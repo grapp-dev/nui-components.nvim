@@ -19,6 +19,7 @@ function Paragraph:init(props, popup_options)
       lines = "",
       align = "left",
       truncate = false,
+      max_lines = nil,
     }, props),
     fn.deep_merge({
       buf_options = {
@@ -33,6 +34,7 @@ function Paragraph:prop_types()
     lines = { "table", "string" },
     align = "string",
     truncate = "boolean",
+    max_lines = "number",
   }
 end
 
@@ -132,10 +134,17 @@ function Paragraph:on_layout()
   local parent = self:get_parent()
   local direction = parent and parent:get_direction() or "column"
   local is_row_direction = direction == "row"
+  local props = self:get_props()
+
+  local height = math.max(1, #lines)
+
+  if props.max_lines then
+    height = math.min(props.max_lines, height)
+  end
 
   return {
     width = is_row_direction and math.max(1, max_width) or nil,
-    height = is_row_direction and nil or math.max(1, #lines),
+    height = is_row_direction and nil or height,
   }
 end
 
