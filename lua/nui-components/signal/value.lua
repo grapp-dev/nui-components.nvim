@@ -59,7 +59,18 @@ function SignalValue:skip(n)
 end
 
 function SignalValue:combine_latest(...)
-  self._private.observable = self._private.observable:combine_latest(...)
+  local signal_values = { ... }
+
+  local sources = fn.imap(signal_values, function(signal_value, index)
+    if type(signal_value) ~= "function" and not (index == #signal_values) then
+      return signal_value:get_observable()
+    end
+
+    return signal_value
+  end)
+
+  self._private.observable = self._private.observable:combine_latest(fn.unpack(sources))
+
   return self
 end
 
