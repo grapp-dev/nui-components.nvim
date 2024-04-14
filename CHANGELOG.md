@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.3.0 - 2024-04-14
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: add support for `max_lines` prop for paragraph component @mobily (#25)
+
+#### 🐛 Bug Fixes
+
+- fix: schedule setting buffer modifiable @b0o (#18)
+- fix: ensure that the `signal_values` provided are resolved correctly when using `combine_latest` @mobily (#24)
+- fix: paragraph width calculation @b0o (#21)
+
 ## v1.2.0 - 2024-04-01
 
 ### What's Changed
