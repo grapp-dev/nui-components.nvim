@@ -224,6 +224,18 @@ And here's the final result:
 
 <Method name="negate" returns="SignalValue" />
 
+#### debounce
+
+> Delays an operation until a specified time has passed without further input.
+
+<Method 
+  name="debounce" 
+  args={[
+    ['ms', 'number'],
+  ]}
+  returns="SignalValue" 
+/>
+
 #### tap
 
 > Executes a function with each value emitted by the observable.
@@ -282,6 +294,18 @@ And here's the final result:
   args={[
     ['scan_fn', 'fun(acc: T, value: R): T'],
     ['initial_value', 'T'],
+  ]}
+  returns="SignalValue" 
+/>
+
+#### start_with
+
+> Emits a default value immediately and synchronously after subscribing.
+
+<Method 
+  name="start_with" 
+  args={[
+    ['default_value', 'T'],
   ]}
   returns="SignalValue" 
 />

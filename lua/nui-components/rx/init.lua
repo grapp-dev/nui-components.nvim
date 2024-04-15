@@ -12,5 +12,6 @@ require("nui-components.rx.operators.scan")
 require("nui-components.rx.operators.skip")
 require("nui-components.rx.operators.combine_latest")
 require("nui-components.rx.operators.debounce")
+require("nui-components.rx.operators.start_with")
 
 return Rx
