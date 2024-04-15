@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.0 - 2024-04-15
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: add `debounce` and `start_with` operators @mobily (#27)
+
 ## v1.3.0 - 2024-04-14
 
 ### What's Changed
