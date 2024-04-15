@@ -58,6 +58,16 @@ function SignalValue:skip(n)
   return self
 end
 
+function SignalValue:debounce(ms)
+  self._private.observable = self._private.observable:debounce(ms)
+  return self
+end
+
+function SignalValue:start_with(value)
+  self._private.observable = self._private.observable:start_with(value)
+  return self
+end
+
 function SignalValue:combine_latest(...)
   local signal_values = { ... }
 
