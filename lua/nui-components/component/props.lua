@@ -67,7 +67,7 @@ function Props:on_next(next_fn)
 end
 
 function Props:unmount()
-  fn.ieach(self._private.signal_values, function(signal_value)
+  fn.keach(self._private.signal_values, function(signal_value)
     signal_value:unsubscribe()
   end)
 end
