@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.4.1 - 2024-04-17
+
+### What's Changed
+
+#### 🐛 Bug Fixes
+
+- fix: use `fn.keach` to iterate over signal values @b0o (#31)
+
 ## v1.4.0 - 2024-04-15
 
 ### What's Changed
