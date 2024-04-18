@@ -10,9 +10,13 @@ function SignalValue.create(subject, key)
     _private = {
       key = key,
       subject = subject,
-      observable = subject:map(function(value)
-        return value[key]
-      end),
+      observable = subject
+        :filter(function(_, k)
+          return k == nil or k == key
+        end)
+        :map(function(value)
+          return value[key]
+        end),
     },
   }
 
