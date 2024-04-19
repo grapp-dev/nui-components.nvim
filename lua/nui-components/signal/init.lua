@@ -47,7 +47,7 @@ function Signal.create(object)
     end,
     __newindex = function(t, key, value)
       t[self.__index][key] = value
-      self._private.subject(t[self.__index], key)
+      self._private.subject(t[self.__index])
     end,
   })
 
