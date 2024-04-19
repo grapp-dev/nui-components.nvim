@@ -207,7 +207,7 @@ function TextInput:on_update()
 
   if not (current_winid == self.winid and mode == "i") then
     vim.schedule(function()
-      if self:_is_next_line_allowed() then
+      if self:_is_next_line_allowed() or self:is_first_render() then
         local lines = self:get_lines()
         vim.api.nvim_buf_set_lines(self.bufnr, 0, #lines, false, lines)
       end
