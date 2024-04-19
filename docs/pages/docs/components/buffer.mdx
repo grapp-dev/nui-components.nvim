@@ -1,0 +1,100 @@
+import { Callout } from 'nextra/components';
+import { Property } from '../../../components/Property'
+
+## Buffer
+
+`Buffer` is a component that handles window layout only and renders the contents of a given buffer.
+
+![](/gifs/buffer-1.gif)
+
+### Usage Example
+
+<Callout type="info">
+  The code example is using the [`gen.nvim`](https://github.com/David-Kunz/gen.nvim) plugin.
+</Callout>
+
+```lua
+local renderer = n.create_renderer({
+  width = 60,
+  height = 3,
+})
+
+local signal = n.create_signal({
+  chat = "",
+  is_preview_visible = false,
+})
+
+local buf = vim.api.nvim_create_buf(false, true)
+
+local body = function()
+  return n.rows(
+    n.text_input({
+      border_label = "Chat",
+      autofocus = true,
+      wrap = true,
+      on_change = function(value)
+        signal.chat = value
+      end,
+    }),
+    n.buffer({
+      id = "preview",
+      flex = 1,
+      buf = buf,
+      autoscroll = true,
+      border_label = "Preview",
+      hidden = signal.is_preview_visible:negate(),
+    })
+  )
+end
+
+renderer:add_mappings({
+  {
+    mode = { "n", "i" },
+    key = "<D-CR>",
+    handler = function()
+      local gen = require("gen")
+      local state = signal:get_value()
+
+      renderer:set_size({ height = 20 })
+      signal.is_preview_visible = true
+
+      renderer:schedule(function()
+        gen.float_win = renderer:get_component_by_id("preview").winid
+        gen.result_buffer = buf
+        gen.exec({ prompt = state.chat })
+      end)
+    end,
+  },
+})
+
+renderer:render(body)
+```
+
+### Properties
+
+#### buf
+
+<Property 
+  required={true}
+  types={['number']}
+/>
+
+#### autoscroll
+
+<Property 
+  defaultValue="false"
+  types={['boolean']}
+/>
+
+#### filetype
+
+<Property 
+  types={['string']}
+/>
+
+#### linebreak
+
+<Property 
+  defaultValue="true"
+  types={['boolean']}
+/>

@@ -66,6 +66,7 @@ M.checkbox = require("nui-components.checkbox")
 M.paragraph = require("nui-components.paragraph")
 M.spinner = require("nui-components.spinner")
 M.animated_text = require("nui-components.animated-text")
+M.buffer = require("nui-components.buffer")
 
 M.tabs = add_children_prop(Tabs)
 M.tab = add_children_prop(Tab)
