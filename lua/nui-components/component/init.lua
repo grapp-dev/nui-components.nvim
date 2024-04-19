@@ -97,6 +97,7 @@ function Component:on_renderer_initialization(renderer, parent, children)
   self._private.renderer = renderer
   self._private.children = children
   self._private.props.children = nil
+  self._private.is_first_render = true
 
   self._private.props.instance:on_next(function(_, key)
     local is_layout_prop = fn.isome(layout_props, function(prop)
@@ -131,7 +132,7 @@ function Component:mount()
   self:_attach_mappings()
   self:_set_initial_focus()
 
-  self:redraw()
+  self:on_update()
 
   vim.schedule(function()
     props.on_mount(self)
@@ -155,6 +156,7 @@ end
 
 function Component:redraw()
   self:on_update()
+  self._private.is_first_render = false
 end
 
 function Component:_default_prop_types()
@@ -433,6 +435,10 @@ end
 
 function Component:is_mounted()
   return self._.mounted
+end
+
+function Component:is_first_render()
+  return self._private.is_first_render
 end
 
 function Component:get_id()
