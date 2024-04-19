@@ -40,6 +40,7 @@ function TextInput:init(props, popup_options)
       },
       win_options = {
         wrap = props.wrap,
+        linebreak = fn.default_to(props.linebreak, false),
       },
     }, popup_options)
   )
