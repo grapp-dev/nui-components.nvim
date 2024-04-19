@@ -16,6 +16,9 @@ function Buffer:init(props, popup_options)
       buf_options = {
         filetype = props.filetype or "",
       },
+      win_options = {
+        linebreak = fn.default_to(props.linebreak, true),
+      },
     }, popup_options)
   )
 end
