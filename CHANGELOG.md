@@ -6,6 +6,7 @@
 
 #### 🚀 Features
 
+- feat: luarocks/rocks.nvim support @mrcjkb (#22)
 - feat: add `linebreak` prop to various components @mobily (#36)
 - feat: add Buffer component @mobily (#33)
 
