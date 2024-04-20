@@ -6,8 +6,6 @@
 
 NuiComponents is a library built on top of [`nui.nvim`](https://github.com/MunifTanjim/nui.nvim), which provides an extensive set of tools for creating user interfaces in Neovim using Lua. With NuiComponents, developers can easily build complex UIs using a simple and intuitive API, which supports various UI elements. Moreover, the library includes advanced features like state management and form validations.
 
-<img src="https://raw.githubusercontent.com/grapp-dev/nui-components.nvim/main/docs/public/gifs/hero.gif" alt="nui-components.nvim">
-
 ## Documentation
 
 Full documentation can be found [here](https://nui-components.grapp.dev).
