@@ -38,17 +38,13 @@ use {
 }
 ```
 
-## For plugin developers
-
-Consider [publishing your plugin to luarocks](https://github.com/nvim-neorocks/sample-luarocks-plugin),
-so that your users don't have to declare dependencies themselves
-when installing with a luarocks-compatible plugin manager
-like [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim)
-or lazy.nvim extended with [luarocks.nvim](https://github.com/vhyrro/luarocks.nvim).
-
 ## Discord
 
 Join [Discord](https://discord.gg/Rj2V3keVS4) to get involved with the community, ask questions, and share tips.
+
+## For plugin developers
+
+Consider publishing your plugin to [`luarocks`](https://github.com/nvim-neorocks/sample-luarocks-plugin) to simplify installation with compatible plugin managers like [`rocks.nvim`](https://github.com/nvim-neorocks/rocks.nvim) or `lazy.nvim` extended with [`luarocks.nvim`](https://github.com/vhyrro/luarocks.nvim).
 
 ## License
 
