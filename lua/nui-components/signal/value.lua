@@ -1,3 +1,4 @@
+local Observable = require("nui-components.rx.observable")
 local fn = require("nui-components.utils.fn")
 
 local SignalValue = {}
@@ -10,8 +11,12 @@ function SignalValue.create(subject, key)
     _private = {
       key = key,
       subject = subject,
-      observable = subject:map(function(value)
-        return value[key]
+      observable = Observable.defer(function()
+        return subject
+          :map(function(value)
+            return value[key]
+          end)
+          :distinct_until_changed(vim.deep_equal)
       end),
     },
   }
@@ -28,7 +33,7 @@ function SignalValue:get_observer_value()
 end
 
 function SignalValue:get_observable()
-  return self._private.observable:distinct_until_changed(vim.deep_equal)
+  return self._private.observable
 end
 
 function SignalValue:map(map_fn)
