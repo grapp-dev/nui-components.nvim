@@ -1,45 +1,66 @@
-import { Homepage, Hero, Features, Feature } from '@grapp/nextra-theme';
+import { Homepage, Hero, Features, Feature, Highlight } from '@grapp/nextra-theme';
 
-<Homepage 
-  preview="/gifs/hero.gif"
-  hero={
-    <Hero 
-      headline=" A set of tools for creating user interfaces in Neovim"
-      subtitle={
-        <>
-          NuiComponents is a library built on top of{' '}
-          <a
-            href="https://github.com/MunifTanjim/nui.nvim"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nx-text-primary-600 nx-underline nx-decoration-from-font [text-underline-position:from-font]"
-          >
-            nui.nvim
-          </a>, it aims to make UI development in Neovim more accessible, intuitive, and enjoyable.
-        </>
-      }
-    />
-  }
->
-  <Features>
+import NuiComponentsLogo from '../components/svg/nui-components-logo.svg';
+import IconFirework from '../components/svg/icon-firework.svg';
+import IconLayout from '../components/svg/icon-layout.svg';
+import IconCheckbox from '../components/svg/icon-checkbox.svg';
+import IconProcess from '../components/svg/icon-process.svg';
+import IconExtension from '../components/svg/icon-extension.svg';
+
+<Homepage>
+  <Hero 
+    title="A set of tools for creating user interfaces in Neovim"
+    logo={NuiComponentsLogo}
+    description={
+      <>
+        NuiComponents is a library built on top of{' '}
+        <a
+          href="https://github.com/MunifTanjim/nui.nvim"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nx-text-primary-600 nx-underline nx-decoration-from-font [text-underline-position:from-font]"
+        >
+          nui.nvim
+        </a>, it aims to make UI development in Neovim more <Highlight>accessible, intuitive, and enjoyable</Highlight>.
+      </>
+    }
+  >
+  </Hero>
+  <Features preview={
+    <div className="lg:pr-16">
+      <video controls={false} autoPlay={true} muted={true} loop={true} style={{ borderRadius: 8 }}>
+        <source src="/gifs/hero.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  }>
     <Feature
+      icon={IconFirework}
+      color="#ffa10d"
       title="Reactive UI"
       description="The library automatically handles UI updates based on input and events received."
     />
     <Feature
+      icon={IconLayout}
+      color="#00e6cf"
       title="Flexbox"
       description="NuiComponents supports a simple flexbox layout system, which provides a more flexible way to layout UIs."
     />
     <Feature
+      icon={IconCheckbox}
+      color="#e6008a"
       title="State Management"
       description="The library provides a state management system that allows managing data and UI state with ease."
     />
-
     <Feature
+      icon={IconExtension}
+      color="#ba95f6"
       title="Extensibility"
       description="Create your custom components by using Component API."
     />
     <Feature
+      icon={IconProcess}
+      color="#ff433e"
       title="Reusability"
       description="Reuse components between different parts of UI, reduce the amount of code you need to write."
     />

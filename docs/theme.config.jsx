@@ -11,11 +11,13 @@ export default getDefaultConfig({
   discord: 'https://discord.gg/Rj2V3keVS4',
   docs: 'https://nui-components.grapp.dev',
   logo: () => {
-    return <Logo image={NuiComponentsLogo} title="nui-components.nvim" />;
+    return <Logo title="nui-components." />;
   },
   footer: () => {
     return (
       <Footer
+        logo={NuiComponentsLogo}
+        description="A feature-rich and highly customizable library for creating user interfaces in Neovim."
         sections={[
           {
             title: 'FAQ',
