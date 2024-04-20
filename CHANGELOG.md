@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.5.0 - 2024-04-20
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: add `linebreak` prop to various components @mobily (#36)
+- feat: add Buffer component @mobily (#33)
+
+#### 🐛 Bug Fixes
+
+- fix: ensure that only the relevant signal value is emitted @mobily (#34)
+- fix: display the initial value of TextInput correctly @mobily (#35)
+
 ## v1.4.1 - 2024-04-17
 
 ### What's Changed
