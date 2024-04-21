@@ -1,4 +1,4 @@
-import { Homepage, Hero, Features, Feature, Highlight } from '@grapp/nextra-theme';
+import { Homepage, Hero, Features, Feature, Highlight, SectionHeader } from '@grapp/nextra-theme';
 
 import NuiComponentsLogo from '../components/svg/nui-components-logo.svg';
 import IconFirework from '../components/svg/icon-firework.svg';
@@ -26,14 +26,23 @@ import IconExtension from '../components/svg/icon-extension.svg';
     }
   >
   </Hero>
-  <Features preview={
-    <div className="lg:pr-16">
-      <video controls={false} autoPlay={true} muted={true} loop={true} style={{ borderRadius: 8 }}>
-        <source src="/gifs/hero.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-  }>
+  <Features 
+    preview={
+      <div className="lg:pr-16">
+        <video controls={false} autoPlay={true} muted={true} loop={true} style={{ borderRadius: 8 }}>
+          <source src="/gifs/hero.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    }
+    header={
+      <SectionHeader 
+        badge="Features" 
+        title="Overview of NuiComponents"
+        description="Discover the possibilities and benefits of NuiComponents to enhance your Neovim UI development."
+      />
+    }
+  >
     <Feature
       icon={IconFirework}
       color="#ffa10d"
