@@ -127,12 +127,7 @@ function Select:actions()
       local tree = self:get_tree()
       local focused_node = self:get_focused_node()
 
-      local obj = {
-        id = focused_node.id,
-        text = focused_node.text,
-        value = focused_node.value,
-      }
-
+      local obj = vim.deepcopy(focused_node)
       local is_selected_fn = pred_selected_fn(focused_node)
 
       if props.multiselect then
