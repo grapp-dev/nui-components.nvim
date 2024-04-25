@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.5.1 - 2024-04-25
+
+### What's Changed
+
+#### 🐛 Bug Fixes
+
+- fix(select): pass node's data to the `on_select` callback @mobily (#38)
+
 ## v1.5.0 - 2024-04-20
 
 ### What's Changed
