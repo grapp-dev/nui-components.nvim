@@ -1,6 +1,9 @@
 local Component = require("nui-components.component")
 local fn = require("nui-components.utils.fn")
 
+---@class NuiComponents.Form: NuiComponents.Component
+---@overload fun(_, props: table<string, any>, popup_options: NuiPopupOptions): NuiComponents.Form
+---@field super NuiComponents.Component
 local Form = Component:extend("Form")
 
 function Form:init(props, popup_options)

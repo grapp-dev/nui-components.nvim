@@ -7,6 +7,9 @@ local Text = require("nui.text")
 local event = require("nui.utils.autocmd").event
 local fn = require("nui-components.utils.fn")
 
+---@class NuiComponents.Component: NuiPopup
+---@overload fun(_, props: table<string, any>, popup_options: NuiPopupOptions): NuiComponents.Component
+---@field super NuiPopup
 local Component = Popup:extend("Component")
 
 function Component:init(props, popup_options)

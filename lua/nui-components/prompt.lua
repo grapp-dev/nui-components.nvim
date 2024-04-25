@@ -2,7 +2,10 @@ local Text = require("nui.text")
 local TextInput = require("nui-components.text-input")
 local fn = require("nui-components.utils.fn")
 
-local Prompt = TextInput:extend("Gap")
+---@class NuiComponents.Prompt: NuiComponents.TextInput
+---@overload fun(_, props: table, popup_options: NuiPopupOptions): NuiComponents.Prompt
+---@field super NuiComponents.TextInput
+local Prompt = TextInput:extend("Prompt")
 
 function Prompt:init(props, popup_options)
   Prompt.super.init(

@@ -3,6 +3,9 @@ local Signal = require("nui-components.signal")
 local event = require("nui.utils.autocmd").event
 local fn = require("nui-components.utils.fn")
 
+---@class NuiComponents.TextInput: NuiComponents.Component
+---@overload fun(_, props: table<string, any>, popup_options: NuiPopupOptions): NuiComponents.TextInput
+---@field super NuiComponents.Component
 local TextInput = Component:extend("TextInput")
 
 function TextInput:init(props, popup_options)
