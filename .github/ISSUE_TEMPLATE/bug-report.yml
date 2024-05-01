@@ -16,6 +16,7 @@ body:
     attributes:
       value: |
         ## Required information
+
   - type: textarea
     id: description
     attributes:
@@ -24,12 +25,28 @@ body:
     validations:
       required: true
 
-  - type: markdown
+  - type: textarea
     attributes:
-      value: |
+      label: Repro
+      description: |
         Please provide a reproducible example that I can easily copy and test or a link to a repository on GitHub under your username that reproduces the issue.
         Here are some tips for providing a minimal example: https://stackoverflow.com/help/mcve.
         Issues without a reproduction are likely to stale.
+    validations:
+      required: true
+        
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A concise description of what you're experiencing.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A concise description of what you expected to happen.
+    validations:
+      required: false
 
   - type: input
     id: stacks-version
