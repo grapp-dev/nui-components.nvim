@@ -1,0 +1,49 @@
+name: Bug report
+description: File a bug report
+labels: 
+  - 'needs review'
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+        Before submitting a new bug/issue, please check the links below to see if there is a solution or question posted there already:
+        -  Issues tab: https://github.com/grapp-dev/nui-components.nvim/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc
+        -  Closed issues tab: https://github.com/grapp-dev/nui-components.nvim/issues?q=is%3Aissue+is%3Aclosed
+        -  Discussions tab: https://github.com/grapp-dev/nui-components.nvim/discussions
+  - type: markdown
+    attributes:
+      value: |
+        ## Required information
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please provide a clear, concise and descriptive explanation of what the bug is. Include screenshots or a video if needed by drag and dropping them to the box below.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        Please provide a reproducible example that I can easily copy and test or a link to a repository on GitHub under your username that reproduces the issue.
+        Here are some tips for providing a minimal example: https://stackoverflow.com/help/mcve.
+        Issues without a reproduction are likely to stale.
+
+  - type: input
+    id: stacks-version
+    attributes:
+      label: NuiComponents version
+      description: What version of NuiComponents are you using?
+    validations:
+      required: true
+
+  - type: input
+    id: neovim-version
+    attributes:
+      label: Neovim version
+      description: What version of Neovim are you using?
+    validations:
+      required: true
+
