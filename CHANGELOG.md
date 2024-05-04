@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.5.2 - 2024-05-04
+
+### What's Changed
+
+#### 🐛 Bug Fixes
+
+- fix: display the initial value of the Prompt component correctly @mobily (#43)
+
 ## v1.5.1 - 2024-04-25
 
 ### What's Changed
