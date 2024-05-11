@@ -20,6 +20,6 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@grapp/nextra-theme": "0.4.8"
+    "@grapp/nextra-theme": "0.4.9"
   }
 }
