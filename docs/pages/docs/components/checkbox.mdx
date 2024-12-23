@@ -16,6 +16,7 @@ local signal = n.create_signal({
 n.checkbox({
   label = "Display preview",
   value = signal.is_preview_visible,
+  global_press_key = "<C-d>"
   on_change = function(is_checked)
     signal.is_preview_visible = is_checked
   end,
@@ -63,6 +64,12 @@ n.checkbox({
 <Property 
   defaultValue="[ ]"
   types={['string']}
+/>
+
+#### global_press_key
+
+<Property
+  types={['string[]', 'string']}
 />
 
 #### prepare_lines
