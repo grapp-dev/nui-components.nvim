@@ -31,6 +31,7 @@ function Checkbox:prop_types()
     value = "boolean",
     checked_sign = "string",
     default_sign = "string",
+    global_press_key = { "table", "string", "nil" },
   })
 end
 
@@ -43,9 +44,20 @@ function Checkbox:mappings()
     props.on_change(value, self)
   end
 
-  return {
-    { mode = { "n" }, key = props.press_key, handler = on_change },
+  local mappings = {
+    { mode = { "n" }, key = props.press_key, handler = on_change  },
   }
+
+  if props.global_press_key then
+    table.insert(mappings, {
+      global = true,
+      mode = { "n", "i", "v" },
+      key = props.global_press_key,
+      handler = on_change,
+    })
+  end
+
+  return mappings
 end
 
 function Checkbox:initial_value()
