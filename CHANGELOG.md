@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.5.3 - 2025-03-15
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: add global_press_key to checkbox @Dom324 (#50)
+
 ## v1.5.2 - 2024-05-04
 
 ### What's Changed
